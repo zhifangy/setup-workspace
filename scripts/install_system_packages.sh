@@ -113,6 +113,7 @@ else
     echo "Installing Micromamba ..."
     mkdir -p ${MAMBA_ROOT_PREFIX} && curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | \
     tar -C ${MAMBA_ROOT_PREFIX} -xj bin/micromamba
+    PATH="${MAMBA_ROOT_PREFIX}/bin:${PATH}"
 fi
 
 # Cleanup old installation
@@ -126,10 +127,10 @@ fi
 
 # Create systools environment
 echo "System tools enviromenmet location: ${SYSTOOLS_DIR}"
-micromamba create -yq -p ${SYSTOOLS_DIR} -f ${SCRIPT_ROOT_DIR}/misc/systools_rhel8.yml
+micromamba create -yq -p ${SYSTOOLS_DIR} -f ${SCRIPT_ROOT_PREFIX}/misc/systools_rhel8.yml
 # copy activate and deactivate script
-cp ${SCRIPT_ROOT_DIR}/scripts/activate_systools.sh ${SYSTOOLS_DIR}/.
-cp ${SCRIPT_ROOT_DIR}/scripts/deactivate_systools.sh ${SYSTOOLS_DIR}/.
+cp ${SCRIPT_ROOT_PREFIX}/scripts/activate_systools.sh ${SYSTOOLS_DIR}/.
+cp ${SCRIPT_ROOT_PREFIX}/scripts/deactivate_systools.sh ${SYSTOOLS_DIR}/.
 
 # Fix zsh directory permission
 chmod 755 ${SYSTOOLS_DIR}/share/zsh
