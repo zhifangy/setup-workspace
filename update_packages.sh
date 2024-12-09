@@ -8,7 +8,11 @@ N_CPUS=${N_CPUS:-8}
 
 case "$1" in
     "systools")
-        brew upgrade && brew cleanup
+        if [ "$OS_TYPE" == "macos" ]; then
+            brew upgrade && brew cleanup
+        elif [ "$OS_TYPE" == "rhel8" ]; then
+            micromamba update -a -p ${SYSTOOLS_DIR} && micromamba clean -yaq
+        fi
         ;;
     "omz"|"oh-my-zsh")
         zsh -ic "upgrade_oh_my_zsh_all"
