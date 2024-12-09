@@ -29,15 +29,13 @@ done
 elif [ "$OS_TYPE" == "rhel8" ]; then
 # Check Micromamba installation
 command -v micromamba &> /dev/null || { echo "Error: Mircomamba is not installed or not included in the PATH." >&2; exit 1; }
+# Check uv installation
+command -v uv &> /dev/null || { echo "Error: uv is not installed or not included in the PATH." >&2; exit 1; }
 # Check if R is installed and in the PATH
 if ( ! echo "$PATH" | tr ':' '\n' | grep -q "$(eval "echo ${INSTALL_ROOT_PREFIX}/r/bin")" ) || ( ! command -v R &> /dev/null ); then
     echo "ERROR: R is not installed or presents in the PATH (required by rpy2)."
     exit 1
 fi
-
-# Install UV
-curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR="${UV_ROOT_DIR}/bin" INSTALLER_NO_MODIFY_PATH=1 sh
-export PATH="${UV_ROOT_DIR}/bin:${PATH}"
 fi
 
 # Install uv-managed python
@@ -117,7 +115,6 @@ export \\
     UV_PYTHON_INSTALL_DIR=\"\${UV_ROOT_DIR}/python\" \\
     UV_TOOL_DIR=\"\${UV_ROOT_DIR}/tool\" \\
     UV_CACHE_DIR=\"\${UV_ROOT_DIR}/cache\"
-export PATH=\"\${UV_ROOT_DIR}/bin:\${PATH}\"
 
 # Python environment
 export PY_LIBS=\"${INSTALL_ROOT_PREFIX}/pyenv\"
