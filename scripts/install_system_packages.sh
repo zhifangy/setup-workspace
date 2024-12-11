@@ -183,6 +183,15 @@ source <(fzf --zsh)
 # Direnv
 eval \"\$(direnv hook zsh)\"
 
+# UV
+export UV_ROOT_DIR=\"${INSTALL_ROOT_PREFIX}/uv\"
+export \\
+    UV_PYTHON_INSTALL_DIR=\"\${UV_ROOT_DIR}/python\" \\
+    UV_TOOL_DIR=\"\${UV_ROOT_DIR}/tool\" \\
+    UV_CACHE_DIR=\"\${UV_ROOT_DIR}/cache\"
+# autocompletion
+eval \"\$(uv generate-shell-completion zsh)\"
+
 # Alias
 # lsd
 alias ll=\"lsd -l\"

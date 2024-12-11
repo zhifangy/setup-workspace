@@ -109,13 +109,6 @@ elif [ "$OS_TYPE" == "rhel8" ]; then
 echo "
 Add following lines to .zshrc:
 
-# UV
-export UV_ROOT_DIR=\"${INSTALL_ROOT_PREFIX}/uv\"
-export \\
-    UV_PYTHON_INSTALL_DIR=\"\${UV_ROOT_DIR}/python\" \\
-    UV_TOOL_DIR=\"\${UV_ROOT_DIR}/tool\" \\
-    UV_CACHE_DIR=\"\${UV_ROOT_DIR}/cache\"
-
 # Python environment
 export PY_LIBS=\"${INSTALL_ROOT_PREFIX}/pyenv\"
 micromamba activate \$PY_LIBS
