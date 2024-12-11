@@ -88,7 +88,6 @@ elif [ "$OS_TYPE" == "rhel8" ]; then
 CONFIGURE_OPTIONS="\
     --build=x86_64-redhat-linux-gnu \
     --host=x86_64-redhat-linux-gnu \
-    --libdir=${R_ROOT_PREFIX}/lib \
     --enable-R-shlib \
     --enable-memory-profiling \
     --with-blas \
@@ -102,10 +101,14 @@ CONFIGURE_OPTIONS="\
 # R compilation environment variable
 export \
     R_BATCHSAVE="--no-save --no-restore" \
-    CC="clang" \
-    OBJC="clang" \
-    CXX="clang++" \
-    FC="gfortran"
+    CC="${SYSTOOLS_DIR}/bin/clang" \
+    OBJC="${SYSTOOLS_DIR}/bin/clang" \
+    CXX="${SYSTOOLS_DIR}/bin/clang++" \
+    FC="${SYSTOOLS_DIR}/bin/gfortran" \
+    CPPFLAGS="-I${SYSTOOLS_DIR}/include -I/usr/include ${CPPFLAGS}" \
+    LDFLAGS="-L${SYSTOOLS_DIR}/lib ${LDFLAGS}" \
+    PKG_CONFIG_PATH="${SYSTOOLS_DIR}/lib/pkgconfig" \
+    LD_LIBRARY_PATH="${R_ROOT_PREFIX}/lib64/R/lib:/lib64"
 fi
 
 # Download R source code
@@ -146,7 +149,7 @@ elif [ "$OS_TYPE" == "rhel8" ]; then
 # set this in the system Rprofile so it works when R is run with --vanilla.
 # this allows R to use Posit hosted binary packages
 # see details at https://github.com/rstudio/r-builds/blob/main/builder/build.sh
-cat <<EOF >> ${R_ROOT_PREFIX}/lib/R/library/base/R/Rprofile
+cat <<EOF >> ${R_ROOT_PREFIX}/lib64/R/library/base/R/Rprofile
 ## Set the default HTTP user agent
 local({
   os_identifier <- if (file.exists("/etc/os-release")) {
@@ -175,4 +178,6 @@ Add following lines to .zshrc:
 # R
 export R_ROOT_PREFIX=\"${INSTALL_ROOT_PREFIX}/r\"
 export PATH=\"\${R_ROOT_PREFIX}/bin:\${PATH}\"
+# make sure libR.so can be found
+export LD_LIBRARY_PATH=\"${INSTALL_ROOT_PREFIX}/r/lib64/R/lib:\${LD_LIBRARY_PATH}\"
 "
