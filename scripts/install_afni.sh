@@ -117,21 +117,9 @@ if [ ${#missing_pkgs[@]} -ne 0 ]; then
     micromamba install -yq -p "${SYSTOOLS_DIR}" "${missing_pkgs[@]}"
     micromamba clean -yaq
 fi
-# build jpeg-9e from source
-# it is a dependency of openmotif package. but the conda-forge version of
-# jpeg9e conflicts with many other packages. here we build jpeg-9e from
-# source and add it to the LD_LIBRARY_PATH
-mkdir -p ${INSTALL_PREFIX}
-curl -L http://www.ijg.org/files/jpegsrc.v9e.tar.gz | tar -xz -C "${INSTALL_PREFIX}"
-cd ${INSTALL_PREFIX}/jpeg-9e
-./configure --prefix=${INSTALL_PREFIX}/jpeg-9e --build=x86_64-redhat-linux-gnu --host=x86_64-redhat-linux-gnu
-make -j${N_CPUS}
-make install
-export LD_LIBRARY_PATH="${INSTALL_PREFIX}/jpeg-9e/lib:${LD_LIBRARY_PATH}"
-# symlink shared libraries
-ln -sf ${SYSTOOLS_DIR}/lib/libicui18n.so ${SYSTOOLS_DIR}/lib/libicui18n.so.58
-ln -sf ${SYSTOOLS_DIR}/lib/libicuuc.so ${SYSTOOLS_DIR}/lib/libicuuc.so.58
-ln -sf ${SYSTOOLS_DIR}/lib/libicudata.so ${SYSTOOLS_DIR}/lib/libicudata.so.58
+# install jpeg-9e, icu58 via micromamba
+micromamba create -p ${INSTALL_PREFIX}/deps -c conda-forge -yq jpeg icu=58
+export LD_LIBRARY_PATH="${INSTALL_PREFIX}/deps/lib:${LD_LIBRARY_PATH}"
 
 # Install AFNI
 echo "Installing AFNI from offical binary package..."
@@ -143,6 +131,9 @@ suma -update_env
 apsearch -update_all_afni_help
 afni_system_check.py -check_all
 
+# Cleanup
+if [ -f .R.Rout ]; then rm .R.Rout; fi
+
 # Add following lines into .zshrc
 echo "
 Add following line to .zshrc
@@ -152,8 +143,8 @@ export AFNI_DIR=\"${INSTALL_ROOT_PREFIX}/afni\"
 export PATH=\"\${AFNI_DIR}:\${PATH}\"
 # command completion
 if [ -f \${HOME}/.afni/help/all_progs.COMP.zsh ]; then source \${HOME}/.afni/help/all_progs.COMP.zsh; fi
-# add jpeg-9e in LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=\"\${LD_LIBRARY_PATH}:${INSTALL_ROOT_PREFIX}/afni/jpeg-9e/lib\"
+# add deps directory in LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=\"\${LD_LIBRARY_PATH}:${INSTALL_ROOT_PREFIX}/afni/deps/lib\"
 # do not log commands
 export AFNI_DONT_LOGFILE=YES
 "
