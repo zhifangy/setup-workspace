@@ -5,7 +5,7 @@ set -e
 source "$(cd "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/utils.sh" && init_setup
 # Set environment variables
 INSTALL_PREFIX="$(eval "echo ${INSTALL_ROOT_PREFIX}/fastsurfer")"
-FASTSURFER_VERSION=${FASTSURFER_VERSION:-cu124-v2.3.3}
+FASTSURFER_VERSION=${FASTSURFER_VERSION:-cuda-v2.4.2}
 # apptainer
 export APPTAINER_TMPDIR="/tmp"
 export APPTAINER_CACHEDIR="$(eval "echo ${INSTALL_ROOT_PREFIX}/apptainer")"
