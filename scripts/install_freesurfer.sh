@@ -5,7 +5,7 @@ set -e
 source "$(cd "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/utils.sh" && init_setup
 # Set environment variables
 INSTALL_PREFIX="$(eval "echo ${INSTALL_ROOT_PREFIX}/freesurfer")"
-FREESURFER_VERSION=${FREESURFER_VERSION:-7.4.1}
+FREESURFER_VERSION=${FREESURFER_VERSION:-8.0.0}
 
 # Cleanup old installation
 if [ -d ${INSTALL_PREFIX} ]; then
@@ -24,10 +24,8 @@ mkdir -p ${INSTALL_PREFIX}
 
 
 if [ "$OS_TYPE" == "macos" ]; then
-wget -q https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${FREESURFER_VERSION}/freesurfer-macOS-darwin_x86_64-${FREESURFER_VERSION}.tar.gz \
-    -P ${INSTALL_PREFIX}
-tar -xzf ${INSTALL_PREFIX}/freesurfer-macOS-darwin_x86_64-${FREESURFER_VERSION}.tar.gz -C ${INSTALL_PREFIX} --strip-components 2
-rm ${INSTALL_PREFIX}/freesurfer-macOS-darwin_x86_64-${FREESURFER_VERSION}.tar.gz
+wget -qO- https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${FREESURFER_VERSION}/tar/freesurfer-macOS-darwin_arm64-${FREESURFER_VERSION}.tar.gz | \
+    tar -xz -C ${INSTALL_PREFIX} --strip-components 1
 
 # Put app to /Applications folder
 if [[ -d /Applications/Freeview.app || -L /Applications/Freeview.app ]]; then rm /Applications/Freeview.app; fi
@@ -35,10 +33,8 @@ ln -s ${INSTALL_PREFIX}/Freeview.app /Applications/Freeview.app
 
 
 elif [ "$OS_TYPE" == "rhel8" ]; then
-wget -q https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${FREESURFER_VERSION}/freesurfer-linux-centos8_x86_64-${FREESURFER_VERSION}.tar.gz \
-    -P ${INSTALL_PREFIX}
-tar -xzf ${INSTALL_PREFIX}/freesurfer-linux-centos8_x86_64-${FREESURFER_VERSION}.tar.gz -C ${INSTALL_PREFIX} --strip-components 2
-rm ${INSTALL_PREFIX}/freesurfer-linux-centos8_x86_64-${FREESURFER_VERSION}.tar.gz
+wget -qO- https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${FREESURFER_VERSION}/tar/freesurfer-linux-centos8_x86_64-${FREESURFER_VERSION}.tar.gz | \
+    tar -xz -C ${INSTALL_PREFIX} --strip-components 1
 fi
 
 # Move previous license.txt to new FreeSurfer folder
@@ -53,11 +49,12 @@ fi
 # Add following lines into .zshrc
 echo "
 Add following line to .zshrc
+This should be put after FSL setups.
 
 # FreeSurfer
 export FREESURFER_HOME=\"${INSTALL_ROOT_PREFIX}/freesurfer\"
 export \\
-    OS=Linux \\
+    OS=$(uname -s) \\
     FS_OVERRIDE=0 \\
     FSFAST_HOME=\${FREESURFER_HOME}/fsfast \\
     SUBJECTS_DIR=\${FREESURFER_HOME}/subjects \\
@@ -75,6 +72,7 @@ export \\
     FSL_BIN=\${FSLDIR}/share/fsl/bin \\
     FREESURFER=\${FREESURFER_HOME} \\
     FIX_VERTEX_AREA= \\
-    FS_LICENSE=\${FREESURFER_HOME}/license.txt
+    FS_LICENSE=\${FREESURFER_HOME}/license.txt \\
+    FREESURFER_HOME_FSPYTHON=\${FREESURFER_HOME}
 export PATH=\"\${FREESURFER_HOME}/bin:\${FSFAST_HOME}/bin:\${FREESURFER_HOME}/tktools:\${MINC_BIN_DIR}:\${PATH}\"
 "
