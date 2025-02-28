@@ -16,6 +16,7 @@ dependencies:
   - zsh
   - wget
   - curl
+  - rclone
   - vim
   - git
   - htop
