@@ -6,7 +6,7 @@ source "$(cd "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/utils.sh" && init_setup
 # Set environment variables
 R_ROOT_PREFIX=${R_ROOT_PREFIX:-$(eval "echo ${INSTALL_ROOT_PREFIX}/r")}
 R_BUILD_DIR=${R_BUILD_DIR:-$(eval "echo ${INSTALL_ROOT_PREFIX}/r_build")}
-R_VERSION=${R_VERSION:-4.4.2}
+R_VERSION=${R_VERSION:-4.5.0}
 N_CPUS=${N_CPUS:-8}
 if [ "$OS_TYPE" == "rhel8" ]; then OS_IDENTIFIER=${OS_IDENTIFIER:-"rhel-8.8"}; fi
 
@@ -91,7 +91,6 @@ CONFIGURE_OPTIONS="\
     --enable-R-shlib \
     --enable-memory-profiling \
     --with-blas \
-    --with-lapack \
     --with-x \
     --with-tcltk \
     --with-tcl-config=${SYSTOOLS_DIR}/lib/tclConfig.sh \
