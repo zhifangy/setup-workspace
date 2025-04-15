@@ -12,7 +12,8 @@ dependencies = [
     "setuptools >=75.0",
     "wheel >= 0.44",
     "numpy >=1.26,<2.0",
-    "pandas >= 2.2.0",
+    "pandas[all] >= 2.2.0",
+    "polars[database,excel,fsspec,pyarrow,pydantic,style,timezone] >= 1.27",
     "ipython >= 8.28",
     "matplotlib >=3.9.2",
     "seaborn >=0.13.2",
@@ -44,6 +45,7 @@ dependencies = [
 [project.optional-dependencies]
 full = [
     "pyenv[ml]",
+    "pyenv[ml_model]",
     "pyenv[graphic]",
     "pyenv[utility]",
     "pyenv[neuroimaging-basic]",
@@ -55,8 +57,6 @@ ml = [
     "torchvision >=0.20",
     "torchaudio >=2.5",
     "torchtext >=0.18",
-    "timm >=1.0",
-    "open_clip_torch >=2.27",
     "pytorch-lightning >=2.4",
     "torchlens >=0.1.22",
     "tensorflow >=2.17",
@@ -64,6 +64,14 @@ ml = [
     "xgboost >=2.1",
     "yellowbrick >=1.5",
     # "gensim", # wait for new release (scipy requirement)
+]
+
+ml_model = [
+    "timm >=1.0",
+    "open_clip_torch >=2.27",
+    "transformers",
+    "tensorflow_hub",
+    "sentence-transformers"
 ]
 
 graphic = [
@@ -206,3 +214,4 @@ glmsingle = { git = "https://github.com/cvnlab/GLMsingle.git"}
 neuromaps = { git = "https://github.com/netneurolab/neuromaps.git" }
 surfplot = { git = "https://github.com/danjgale/surfplot.git" }
 resmem = { git = "https://github.com/Brain-Bridge-Lab/resmem" }
+mayavi = { git = "https://github.com/enthought/mayavi.git" }
