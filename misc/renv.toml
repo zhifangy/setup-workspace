@@ -13,6 +13,7 @@ packages = [
     "styler",
     "formatR",
     "BiocManager",
+    "optparse",
 
     # Tidyverse & dataIO
     "tidyverse",
