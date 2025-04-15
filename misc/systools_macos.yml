@@ -57,6 +57,7 @@ dependencies:
     - texinfo
     - hdf5
     - mariadb-connector-c
+    - postgresql
     - cairo
     - libpng
     - jpeg

@@ -46,6 +46,8 @@ dependencies:
   - swig
   - libv8
   - hdf5
+  - mariadb-connector-c
+  - postgresql
   - gsl
   - icu >= 72
   - libjpeg-turbo
