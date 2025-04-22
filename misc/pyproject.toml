@@ -109,7 +109,7 @@ neuroimaging-basic = [
     "nibabel[all] >=5.3.0",
     "indexed_gzip >=1.8.7", # used by nibabel
     "nilearn >=0.10.4",
-    "pydra >=0.23",
+    "pydra >=1.0a0",
     "nipype >=1.8.6",
 ]
 
