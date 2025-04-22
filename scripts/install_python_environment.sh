@@ -39,7 +39,7 @@ fi
 fi
 
 # Install uv-managed python
-uv python install ${PYTHON_VERSION}
+uv python install -r ${PYTHON_VERSION}
 
 eval "$(micromamba shell hook --shell bash --root-prefix ${MAMBA_ROOT_PREFIX})"
 # Cleanup old python environment
