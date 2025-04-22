@@ -30,6 +30,7 @@ dependencies:
   - direnv
   - ruff
   - uv
+  - awscli
   # Libraries and tools
   - readline
   - zlib

@@ -29,6 +29,7 @@ dependencies:
     - rclone
     - autossh
     - gromgit/fuse/sshfs-mac
+    - awscli
     # Libraries and tools
     - glib
     - python
