@@ -58,9 +58,6 @@ uv venv --allow-existing --seed --python ${PYTHON_VERSION} ${PY_LIBS}
 
 # Install packages in venv via UV
 uv pip install -r ${SCRIPT_ROOT_PREFIX}/misc/pyproject.toml --extra full
-# special treatment for brainstat
-uv pip install -r ${SCRIPT_ROOT_PREFIX}/misc/pyproject.toml --extra brainstat_deps
-uv pip install -r ${SCRIPT_ROOT_PREFIX}/misc/pyproject.toml --extra brainstat_nodeps --no-deps
 
 # Cleanup
 micromamba clean -yaq

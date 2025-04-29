@@ -12,7 +12,7 @@ dependencies = [
     "setuptools >=75.0",
     "wheel >= 0.44",
     "numpy >=1.26,<2.0",
-    "pandas[all] >= 2.2.0",
+    "pandas >= 2.2.0",
     "polars[database,excel,fsspec,pyarrow,pydantic,style,timezone] >= 1.27",
     "ipython >= 8.28",
     "matplotlib >=3.9.2",
@@ -124,14 +124,14 @@ neuroimaging-utils = [
     "mne[full] >= 1.8.0",
     "rsatoolbox >= 0.2.0",
     "glmsingle >= 1.2",
-    # "brainstat", # wait for pymare update (scipy requirement)
+    "brainstat >=0.4.2",
     "hypertools >= 0.8.0",
     "neuropythy >= 0.12.15",
     "neuromaps >= 0.0.5",
     # "deepmreye" # wait for new release (antspyx requirement)
 
     # plotting
-    "brainspace >=0.1.10",
+    "brainspace >=0.1.20",
     "surfplot >=0.2.0",
     "pycortex >= 1.2.10",
     "pysurfer >= 0.11.2",
@@ -139,74 +139,6 @@ neuroimaging-utils = [
 
 resmem = [
     "resmem >=1.1.6"
-]
-
-brainstat_deps = [
-
-    # brainstat dependencies
-    # copy from brainstat requirements.txt
-    # exclude nimare since it requires pymare
-    # exclude h5py constrain
-    "abagen>=0.1",
-    "brainspace>=0.1.1",
-    # "h5py <3.2",
-    "matplotlib >=2.0.0",
-    "netneurotools >=0.2.3",
-    "neurosynth",
-    "nibabel",
-    "nilearn >=0.7.0",
-    # "nimare",
-    "numpy >=1.21",
-    "pandas",
-    "scikit_learn",
-    "scipy >=1.3.3",
-    "statsmodels",
-    "templateflow",
-    "trimesh",
-    "wordcloud",
-
-    # nimare dependencies
-    # copy from nimare setup.cfg
-    # exclude pymare
-    "cognitiveatlas >=0.1.11",  # nimare.annotate.cogat
-    "fuzzywuzzy",  # nimare.annotate
-    "importlib-resources; python_version < '3.9' ", # for importlib.resources.files in Python 3.8
-    "jinja2", # nimare.reports
-    "joblib >=1.3.0",  # parallelization
-    "matplotlib >=3.6.0",  # this is for nilearn, which doesn't include it in its reqs
-    "nibabel >=3.2.0",  # I/O of niftis
-    "nilearn >=0.10.1,!=0.10.3", # https://github.com/nilearn/nilearn/pull/4256 0.10.3 is broken
-    "numba >=0.57.0", # used by sparse
-    "numpy >=1.22", # numba needs NumPy 1.22 or greater
-    "pandas >=2.0.0",
-    "patsy",  # for cbmr
-    "plotly",  # nimare.reports
-    # "pymare >=0.0.8",  # nimare.meta.ibma and stats
-    "pyyaml", # nimare.reports
-    "requests",  # nimare.extract
-    "ridgeplot",  # nimare.reports
-    "scikit-learn >=1.0.0",  # nimare.annotate and nimare.decode
-    "scipy >=1.6.0",
-    "sparse >=0.13.0",  # for kernel transformers
-    "statsmodels !=0.13.2",  # this version doesn't install properly
-    "tqdm",  # progress bars throughout package
-
-    # pymare dependencies
-    # copy from nimare setup.cfg
-    # relax scipy constrain since the issue has been resolved
-    "numpy >=1.8.0",
-    "pandas",
-    # "scipy <1.13.0",  # https://github.com/arviz-devs/arviz/issues/2336
-    "sympy",
-    "wrapt",
-]
-
-brainstat_nodeps = [
-    # TODO: check after new pymare release
-    # this extra should be used with --no-deps argument
-    "brainstat >=0.4.2",
-    "nimare >=0.4.0",
-    "pymare >=0.0.8"
 ]
 
 [tool.uv.sources]
