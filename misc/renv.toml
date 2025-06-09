@@ -86,6 +86,7 @@ packages = [
     "cocor",
     "skimr",
     "broom.mixed",
+    "report",
     "paran",
     "metafor",
 
