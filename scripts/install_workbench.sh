@@ -5,7 +5,7 @@ set -e
 source "$(cd "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/utils.sh" && init_setup
 # Set environment variables
 INSTALL_PREFIX="$(eval "echo ${INSTALL_ROOT_PREFIX}/workbench")"
-WORKBENCH_VERSION=${WORKBENCH_VERSION:-v2.0.1}
+WORKBENCH_VERSION=${WORKBENCH_VERSION:-v2.1.0}
 
 # Cleanup old installation
 if [ -d ${INSTALL_PREFIX} ]; then rm -rf ${INSTALL_PREFIX}; fi
@@ -45,7 +45,7 @@ unzip -q -o -d ${INSTALL_PREFIX}/tmp ${INSTALL_PREFIX}/workbench-rh_linux64-${WO
 mv ${INSTALL_PREFIX}/tmp/workbench/* ${INSTALL_PREFIX}
 
 # Cleanup
-rm ${INSTALL_PREFIX}/workbench-rh_linux64-v2.0.1.zip
+rm ${INSTALL_PREFIX}/workbench-rh_linux64-${WORKBENCH_VERSION}.zip
 rm -r ${INSTALL_PREFIX}/tmp
 
 # Add following lines into .zshrc
