@@ -19,13 +19,16 @@ dependencies = [
     "seaborn >=0.13.2",
     "jupyterlab >= 4.2.5",
     "scipy >=1.14",
-    "statsmodels >=0.14",
-    "pingouin >=0.5.5",
     "scikit-learn >= 1.5.0",
     "plotly >=5.24",
     "kaleido >=0.2.1",
     "vtk >=9.3.1",
-    "mayavi >=4.8.2",
+    "mayavi >=4.8.3",
+
+    # Statistics
+    "statsmodels >=0.14",
+    "pingouin >=0.5.5",
+    "pymer4 >=0.9.2",
 
     # Utility
     "joblib >= 1.4",
@@ -146,4 +149,3 @@ glmsingle = { git = "https://github.com/cvnlab/GLMsingle.git"}
 neuromaps = { git = "https://github.com/netneurolab/neuromaps.git" }
 surfplot = { git = "https://github.com/danjgale/surfplot.git" }
 resmem = { git = "https://github.com/Brain-Bridge-Lab/resmem" }
-mayavi = { git = "https://github.com/enthought/mayavi.git" }
