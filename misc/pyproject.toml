@@ -29,6 +29,7 @@ dependencies = [
     "statsmodels >=0.14",
     "pingouin >=0.5.5",
     "pymer4 >=0.9.2",
+    "formulae >= 0.5.4",
 
     # Utility
     "joblib >= 1.4",
