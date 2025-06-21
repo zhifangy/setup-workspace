@@ -5,7 +5,7 @@ set -e
 source "$(cd "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/utils.sh" && init_setup
 # Set environment variables
 INSTALL_PREFIX="$(eval "echo ${INSTALL_ROOT_PREFIX}/xcp-d")"
-XCPD_VERSION=${XCPD_VERSION:-0.10.1}
+XCPD_VERSION=${XCPD_VERSION:-0.10.7}
 # apptainer
 export APPTAINER_TMPDIR="/tmp"
 export APPTAINER_CACHEDIR="$(eval "echo ${INSTALL_ROOT_PREFIX}/apptainer")"
