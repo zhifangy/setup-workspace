@@ -50,7 +50,7 @@ dependencies:
   - mariadb-connector-c
   - postgresql
   - gsl
-  - icu >= 72
+  - icu>=72
   - libjpeg-turbo
   - libpng
   - libtiff
@@ -62,7 +62,6 @@ dependencies:
   - patchelf
   - valgrind
   # X11, mesa
-  - xorg-x11-server-xvfb-cos7-x86_64
   - xorg-libx11
   - xorg-libxft
   - xorg-libxpm
@@ -73,10 +72,11 @@ dependencies:
   - xorg-libxi
   - xorg-libice
   - xorg-libsm
-  - mesa-libgl-devel-cos7-x86_64
+  - xorg-x11-server-xvfb-conda-x86_64
+  - mesa-libgl-devel-conda-x86_64
   - mesa-libglw-devel-cos7-x86_64
   - libglu
-  - glib2-cos7-x86_64
+  - glib2-conda-x86_64
   - openmotif
   # fonts
   - open-fonts

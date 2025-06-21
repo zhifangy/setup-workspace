@@ -93,80 +93,70 @@ alias preview=\"fzf --preview 'bat --color=always --style=numbers --line-range=:
 
 elif [ "$OS_TYPE" == "rhel8" ]; then
 # Set environment variables
-export MAMBA_ROOT_PREFIX="$(eval "echo ${INSTALL_ROOT_PREFIX}/micromamba")"
+export PIXI_HOME="$(eval "echo ${INSTALL_ROOT_PREFIX}/pixi")"
 export \
-    CONDA_ENVS_DIRS="${MAMBA_ROOT_PREFIX}/envs" \
-    CONDA_PKGS_DIRS="${MAMBA_ROOT_PREFIX}/pkgs" \
-    CONDA_CHANNELS="conda-forge,HCC"
-SYSTOOLS_DIR="$(eval "echo ${INSTALL_ROOT_PREFIX}/systools")"
+    PIXI_CACHE_DIR="${PIXI_HOME}/cache" \
+    PIXI_NO_PATH_UPDATE=1
+SYSTOOLS_DIR="$(eval "echo ${INSTALL_ROOT_PREFIX}/pixi/envs/systools")"
 
-# Install Micromamba
-if [ -x "${MAMBA_ROOT_PREFIX}/bin/micromamba" ]; then
-    echo "Micromamba is already installed."
-    # check if ${MAMBA_ROOT_PREFIX}/bin is in the PATH
-    if ! echo "$PATH" | grep -q "${MAMBA_ROOT_PREFIX}/bin"; then
-        echo "However, ${MAMBA_ROOT_PREFIX}/bin is not in the \$PATH."
+# Install Pixi
+if [ -x "${PIXI_HOME}/bin/pixi" ]; then
+    echo "Pixi is already installed. Try self-update ..."
+    pixi self-update --no-release-note
+    # check if ${PIXI_HOME}/bin is in the PATH
+    if ! echo "$PATH" | grep -q "${PIXI_HOME}/bin"; then
+        echo "However, ${PIXI_HOME}/bin is not in the \$PATH."
         echo "Temporarily adding it to \$PATH. Please modify the shell profile file to make it persistent."
-        PATH="${MAMBA_ROOT_PREFIX}/bin:${PATH}"
+        PATH="${PIXI_HOME}/bin:${PATH}"
     fi
 else
-    echo "Installing Micromamba ..."
-    mkdir -p ${MAMBA_ROOT_PREFIX} && curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | \
-    tar -C ${MAMBA_ROOT_PREFIX} -xj bin/micromamba
+    echo "Installing Pixi ..."
+    curl -fsSL https://pixi.sh/install.sh | bash
     PATH="${MAMBA_ROOT_PREFIX}/bin:${PATH}"
 fi
 
 # Cleanup old installation
-if [ $(micromamba env list | grep -c ${SYSTOOLS_DIR}) -ne 0 ]; then
-    echo "Cleanup old environment ${SYSTOOLS_DIR}..."
-    micromamba env remove -p ${SYSTOOLS_DIR} -yq
-elif [ -d ${SYSTOOLS_DIR} ]; then
+if [ -d ${SYSTOOLS_DIR} ]; then
     echo "Cleanup old environment ${SYSTOOLS_DIR}..."
     rm -rf ${SYSTOOLS_DIR}
 fi
 
+# Temporarily install yq for parsing yaml format
+pixi global install yq
+
+# Read package list
+mapfile -t pkgs < <(yq -r '.dependencies[]' ${SCRIPT_ROOT_PREFIX}/misc/systools_rhel8.yml)
+# Read channel list
+mapfile -t tmp < <(yq -r '.channels[]' ${SCRIPT_ROOT_PREFIX}/misc/systools_rhel8.yml)
+channels=()
+for channel in "${tmp[@]}"; do
+    # Add the '-c' flag as one element...
+    channels+=("-c")
+    channels+=("$channel")
+done
+
 # Create systools environment
 echo "System tools enviromenmet location: ${SYSTOOLS_DIR}"
-micromamba create -yq -p ${SYSTOOLS_DIR} -f ${SCRIPT_ROOT_PREFIX}/misc/systools_rhel8.yml
+pixi global install -e systools ${pkgs[@]} ${channels[@]}
 # copy activate and deactivate script
 cp ${SCRIPT_ROOT_PREFIX}/scripts/activate_systools.sh ${SYSTOOLS_DIR}/.
 cp ${SCRIPT_ROOT_PREFIX}/scripts/deactivate_systools.sh ${SYSTOOLS_DIR}/.
 
-# Fix zsh directory permission
-chmod 755 ${SYSTOOLS_DIR}/share/zsh
-chmod 755 $(ls -d ${SYSTOOLS_DIR}/share/zsh/*)
-chmod 755 $(ls -d ${SYSTOOLS_DIR}/share/zsh/*)/functions
-
 # Cleanup
-micromamba clean -yaq
+pixi global uninstall yq
+pixi clean cache -y
 
 # Add following lines into .zshrc
 echo "
 Add following line to .zshrc
 
-# Micromamba
-# >>> mamba initialize >>>
-# !! Contents within this block are managed by 'mamba init' !!
-export MAMBA_EXE=\"${INSTALL_ROOT_PREFIX}/micromamba/bin/micromamba\";
-export MAMBA_ROOT_PREFIX=\"${INSTALL_ROOT_PREFIX}/micromamba\";
-__mamba_setup=\"\$(\"\$MAMBA_EXE\" shell hook --shell zsh --root-prefix \"\$MAMBA_ROOT_PREFIX\" 2> /dev/null)\"
-if [ \$? -eq 0 ]; then
-    eval \"\$__mamba_setup\"
-else
-    alias micromamba=\"\$MAMBA_EXE\"  # Fallback on help from mamba activate
-fi
-unset __mamba_setup
-# <<< mamba initialize <<<
-export PATH=\"${INSTALL_ROOT_PREFIX}/micromamba/bin:\${PATH}\"
-# configuration
-export \\
-    CONDA_ENVS_DIRS=\"\${MAMBA_ROOT_PREFIX}/envs\" \\
-    CONDA_PKGS_DIRS=\"\${MAMBA_ROOT_PREFIX}/pkgs\" \\
-    CONDA_CHANNELS=\"conda-forge,HCC\"
+# Pixi
+export PIXI_HOME=\"${INSTALL_ROOT_PREFIX}/pixi\"
+export PATH=\"\${PIXI_HOME}/bin:\${PATH}\"
+eval \"\$(pixi completion --shell zsh)\"
 
 # Systools
-export SYSTOOLS_DIR=\"${INSTALL_ROOT_PREFIX}/systools\"
-export PATH=\"\${SYSTOOLS_DIR}/bin:\${SYSTOOLS_DIR}/x86_64-conda-linux-gnu/sysroot/usr/bin:\${PATH}\"
+export SYSTOOLS_DIR=\"${INSTALL_ROOT_PREFIX}/pixi/envs/systools\"
 
 # Compiler configuration
 source \${SYSTOOLS_DIR}/activate_systools.sh
