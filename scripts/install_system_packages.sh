@@ -152,6 +152,7 @@ Add following line to .zshrc
 
 # Pixi
 export PIXI_HOME=\"${INSTALL_ROOT_PREFIX}/pixi\"
+export PIXI_CACHE_DIR=\"\${PIXI_HOME}/cache\"
 export PATH=\"\${PIXI_HOME}/bin:\${PATH}\"
 eval \"\$(pixi completion --shell zsh)\"
 
