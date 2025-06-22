@@ -74,7 +74,6 @@ dependencies:
   - xorg-libice
   - xorg-libsm
   - xorg-x11-server-xvfb-conda-x86_64
-  - mesa-libgl-devel-conda-x86_64
   - mesa-libglw-devel-cos7-x86_64
   - libglu
   - glib2-conda-x86_64
