@@ -121,10 +121,9 @@ if [ -d ${SYSTOOLS_DIR} ]; then
     rm -rf ${SYSTOOLS_DIR}
 fi
 
-# Temporarily install yq for parsing yaml format
-pixi global install yq
-
 # Read package list
+# temporarily install yq for parsing yaml format
+pixi global install go-yq
 mapfile -t pkgs < <(yq -r '.dependencies[]' ${SCRIPT_ROOT_PREFIX}/misc/systools_rhel8.yml)
 # Read channel list
 mapfile -t tmp < <(yq -r '.channels[]' ${SCRIPT_ROOT_PREFIX}/misc/systools_rhel8.yml)
@@ -134,6 +133,8 @@ for channel in "${tmp[@]}"; do
     channels+=("-c")
     channels+=("$channel")
 done
+# remove yq to avoid conflict with systools environment
+pixi global uninstall go-yq
 
 # Create systools environment
 echo "System tools enviromenmet location: ${SYSTOOLS_DIR}"
@@ -143,7 +144,6 @@ cp ${SCRIPT_ROOT_PREFIX}/scripts/activate_systools.sh ${SYSTOOLS_DIR}/.
 cp ${SCRIPT_ROOT_PREFIX}/scripts/deactivate_systools.sh ${SYSTOOLS_DIR}/.
 
 # Cleanup
-pixi global uninstall yq
 pixi clean cache -y
 
 # Add following lines into .zshrc
@@ -156,7 +156,8 @@ export PATH=\"\${PIXI_HOME}/bin:\${PATH}\"
 eval \"\$(pixi completion --shell zsh)\"
 
 # Systools
-export SYSTOOLS_DIR=\"${INSTALL_ROOT_PREFIX}/pixi/envs/systools\"
+export SYSTOOLS_ENV=\"systools\"
+export SYSTOOLS_DIR=\"${INSTALL_ROOT_PREFIX}/pixi/envs/\${SYSTOOLS_ENV}\"
 
 # Compiler configuration
 source \${SYSTOOLS_DIR}/activate_systools.sh

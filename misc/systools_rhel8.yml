@@ -26,6 +26,7 @@ dependencies:
   - quarto
   - fzf
   - bat
+  - go-yq
   - lsdeluxe
   - direnv
   - ruff
