@@ -1,152 +1,158 @@
 [project]
 name = "pyenv"
 version = "0.1.0"
-description = "Python environment"
-requires-python = "==3.12.*"
 
-# Note: Package version constrains updated on 2024-11-18
-dependencies = [
+# Package version constrains updated on 2025-06-21
+[tool.pixi.dependencies]
+python = "3.12.*"
+[tool.pixi.pypi-dependencies]
+pip = ">=25.0"
+setuptools = ">=80.0"
+wheel = ">=0.45"
+numpy = ">=2.1"
+pandas = ">=2.3.0"
+polars = { version = ">=1.31", extras = [
+    "database",
+    "excel",
+    "fsspec",
+    "pyarrow",
+    "pydantic",
+    "style",
+    "timezone",
+] }
+ipython = ">=9.3"
+matplotlib = ">=3.10"
+seaborn = ">=0.13.2"
+jupyterlab = ">=4.4"
+scipy = ">=1.14"
+scikit-learn = ">=1.7.0"
+plotly = ">=6.1"
+kaleido = ">=1.0"
+vtk = ">=9.3.1"
+mayavi = ">=4.8.3"
+PyQt5 = ">=5.15"
+# Statistics
+statsmodels = ">=0.14"
+pingouin = ">=0.5.5"
+pymer4 = ">=0.9.2"
+formulae = ">=0.5.4"
+# Utility
+joblib = ">=1.5"
+tqdm = ">=4.67"
+itables = ">=2.4"
+pyjanitor = ">=0.31"
+h5py = ">=3.14"
+# JupyterLab utility
+ipywidgets = ">=8.1.7"
+"jupyterlab-lsp" = ">=5.1"
+"python-lsp-server" = { version = ">=1.12", extras = ["all"] }
+"jupyterlab-code-formatter" = ">=3.0"
 
-    # Essential
-    "pip >= 24.0",
-    "setuptools >=75.0",
-    "wheel >= 0.44",
-    "numpy >=1.26,<2.0",
-    "pandas >= 2.2.0",
-    "polars[database,excel,fsspec,pyarrow,pydantic,style,timezone] >= 1.27",
-    "ipython >= 8.28",
-    "matplotlib >=3.9.2",
-    "seaborn >=0.13.2",
-    "jupyterlab >= 4.2.5",
-    "scipy >=1.14",
-    "scikit-learn >= 1.5.0",
-    "plotly >=5.24",
-    "kaleido >=0.2.1",
-    "vtk >=9.3.1",
-    "mayavi >=4.8.3",
+[tool.pixi.feature.graphic.pypi-dependencies]
+bokeh = ">=3.7"
+lets-plot = ">=4.6"
+panel = ">=1.7"
+holoviews = ">=1.20"
+pyvista = ">=0.45"
+scikit-image = ">=0.25"
+statannotations = ">=0.7"
 
-    # Statistics
-    "statsmodels >=0.14",
-    "pingouin >=0.5.5",
-    "pymer4 >=0.9.2",
-    "formulae >= 0.5.4",
+[tool.pixi.feature.utility.pypi-dependencies]
+datalad = ">=1.2"
+s3fs = ">=2025"
+cookiecutter = ">=2.6"
+flask = ">=3.1.0"
+flask-cors = ">=6.0.0"
+# jupyterlab utility
+jupytext = ">=1.17"
+jupyter_bokeh = ">=4.0"
+jupyterlab_execute_time = ">=3.2"
+jupyterlab-quarto = ">=0.3"
+nbdime = ">=4.0"
+# R utility
+rpy2 = ">=3.6"
+radian = ">=0.6"
 
-    # Utility
-    "joblib >= 1.4",
-    "tqdm >= 4.66",
-    "itables >= 2.2",
-    "pyjanitor >=0.29",
-    "h5py >=3.12",
+[tool.pixi.feature.ml.pypi-dependencies]
+torch = ">=2.7"
+torchvision = ">=0.22"
+torchaudio = ">=2.7"
+torchtext = ">=0.18"
+pytorch-lightning = ">=2.5"
+torchlens = ">=0.1.35"
+tensorflow = ">=2.19"
+umap-learn = ">=0.5.7"
+xgboost = ">=3.0"
+yellowbrick = ">=1.5"
 
-    # JupyterLab utility
-    "ipywidgets >=8.1.5",
-    "jupyterlab-lsp >=2.2.5",
-    "python-lsp-server[all] >=1.12",
-    "jupyterlab-code-formatter >=3.0",
+[tool.pixi.feature.ml_model.pypi-dependencies]
+huggingface_hub = ">=0.33"
+tensorflow_hub = ">=0.16"
+timm = ">=1.0"
+open_clip_torch = ">=2.32"
+transformers = ">=4.52"
+sentence-transformers = ">=4.1"
 
-]
+[tool.pixi.feature.neuroimaging_basic.pypi-dependencies]
+nibabel = { version = ">=5.3", extras = ["all"] }
+indexed_gzip = ">=1.9"
+nilearn = ">=0.11"
+pydra = ">=1.0a1"
+nipype = ">=1.10"
 
-[project.optional-dependencies]
-full = [
-    "pyenv[ml]",
-    "pyenv[ml_model]",
-    "pyenv[graphic]",
-    "pyenv[utility]",
-    "pyenv[neuroimaging-basic]",
-    "pyenv[neuroimaging-utils]"
-]
-
-ml = [
-    "torch >=2.5",
-    "torchvision >=0.20",
-    "torchaudio >=2.5",
-    "torchtext >=0.18",
-    "pytorch-lightning >=2.4",
-    "torchlens >=0.1.22",
-    "tensorflow >=2.17",
-    "umap-learn >=0.5.6",
-    "xgboost >=2.1",
-    "yellowbrick >=1.5",
-    # "gensim", # wait for new release (scipy requirement)
-]
-
-ml_model = [
-    "timm >=1.0",
-    "open_clip_torch >=2.27",
-    "transformers",
-    "tensorflow_hub",
-    "sentence-transformers"
-]
-
-graphic = [
-    "bokeh >=3.6",
-    "lets-plot >=4.4",
-    "panel >=1.5.2",
-    "holoviews >=1.19",
-    "pyvista >=0.44",
-    "scikit-image >=0.24",
-    "statannotations >=0.7",
-]
-
-utility = [
-
-    "datalad >=1.1.3",
-    "s3fs >=2024.9",
-    "cookiecutter >=2.6",
-    "flask >=3.1.0",
-    "flask-cors >=5.0.0",
-
-    # jupyterlab utility
-    "jupytext >=1.16",
-    "jupyter_bokeh >=4.0",
-    "jupyterlab_execute_time >=3.2",
-    "jupyterlab-quarto >=0.3.5",
-    "nbdime >=4.0",
-
-    # R utility
-    "rpy2 >=3.5.16",
-    "radian >=0.6.13",
-]
-
-neuroimaging-basic = [
-    # Neuroimaging essential
-    "nibabel[all] >=5.3.0",
-    "indexed_gzip >=1.8.7", # used by nibabel
-    "nilearn >=0.10.4",
-    "pydra >=1.0a0",
-    "nipype >=1.8.6",
-]
-
-neuroimaging-utils = [
-
-    "heudiconv >=1.3.0",
-    "dcm2bids >=3.2.0",
-    "pybids >= 0.17.0",
-    "antspyx >=0.5.3",
-    "templateflow >=24.2",
-    "nitransforms >=24.0",
-    "mne[full] >= 1.8.0",
-    "rsatoolbox >= 0.2.0",
-    "glmsingle >= 1.2",
-    "brainstat >=0.4.2",
-    "hypertools >= 0.8.0",
-    "neuropythy >= 0.12.15",
-    "neuromaps >= 0.0.5",
-    # "deepmreye" # wait for new release (antspyx requirement)
-
-    # plotting
-    "brainspace >=0.1.20",
-    "surfplot >=0.2.0",
-    "pycortex >= 1.2.10",
-    "pysurfer >= 0.11.2",
-]
-
-resmem = [
-    "resmem >=1.1.6"
-]
-
-[tool.uv.sources]
-glmsingle = { git = "https://github.com/cvnlab/GLMsingle.git"}
+[tool.pixi.feature.neuroimaging_utils.pypi-dependencies]
+heudiconv = ">=1.3"
+dcm2bids = ">=3.2"
+pybids = ">=0.19.0"
+# antspyx =">=0.5.5" # wait for new release
+templateflow = ">=24.2"
+nitransforms = ">=24.1"
+mne = { version = ">=1.8.0", extras = ["full"] }
+rsatoolbox = ">=0.2"
+glmsingle = { git = "https://github.com/cvnlab/GLMsingle.git" }
+brainstat = ">=0.4"
+hypertools = ">=0.8"
+neuropythy = ">=0.12"
 neuromaps = { git = "https://github.com/netneurolab/neuromaps.git" }
-surfplot = { git = "https://github.com/danjgale/surfplot.git" }
-resmem = { git = "https://github.com/Brain-Bridge-Lab/resmem" }
+# plotting
+brainspace = ">=0.1.20" # hard pin vtk==9.3.1 (no python 3.13 support), check after new release
+surfplot = ">=0.3.0rc0"
+pycortex = ">=1.2.11"
+pysurfer = ">=0.11"
+
+[tool.pixi.feature.nct.dependencies]
+python = "3.12.*"
+[tool.pixi.feature.nct.pypi-dependencies]
+cbig_network_correspondence = ">=0.3.3"
+
+[tool.pixi.feature.deepmreye.dependencies]
+python = "3.11.*"
+[tool.pixi.feature.deepmreye.pypi-dependencies]
+deepmreye = ">=0.3"
+
+[tool.pixi.feature.gensim.dependencies]
+python = "3.12.*"
+[tool.pixi.feature.gensim.pypi-dependencies]
+gensim = ">=4.3.3"
+
+[tool.pixi.environments]
+default = { features = [
+    "default",
+    "graphic",
+    "utility",
+    "ml",
+    "ml_model",
+    "neuroimaging_basic",
+    "neuroimaging_utils",
+] }
+nct = { features = ["nct"], no-default-feature = true }
+deepmreye = { features = ["deepmreye"], no-default-feature = true }
+gensim = { features = ["gensim"], no-default-feature = true }
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-arm64"]
+
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
