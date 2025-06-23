@@ -11,18 +11,17 @@ case "$1" in
         if [ "$OS_TYPE" == "macos" ]; then
             brew upgrade && brew cleanup
         elif [ "$OS_TYPE" == "rhel8" ]; then
-            micromamba update -a -p ${SYSTOOLS_DIR} && micromamba clean -yaq
+            pixi global update systools
         fi
         ;;
     "omz"|"oh-my-zsh")
         zsh -ic "upgrade_oh_my_zsh_all"
         ;;
     "pyenv")
-        uv pip install -r ${SCRIPT_ROOT_PREFIX}/misc/pyproject.toml -U --extra full
-        uv cache clean
+        pixi update --manifest-path ${PY_LIBS}/pyproject.toml
         ;;
     "pyenv-dryrun")
-        uv pip install -r ${SCRIPT_ROOT_PREFIX}/misc/pyproject.toml -U --dry-run --extra full
+        pixi update --manifest-path ${PY_LIBS}/pyproject.toml --dry-run
         ;;
     "renv")
         Rscript -e "
@@ -51,16 +50,16 @@ case "$1" in
         tlmgr update --self --all
         ;;
     "fsl")
-        update_fsl_release
-        ;;
-    "fsleyes")
-        micromamba update fsleyes -p "$(eval "echo ${INSTALL_ROOT_PREFIX}/fsleyes/env")" -c conda-forge
+        ${FSLDIR}/bin/update_fsl_release
         ;;
     "ants")
-        micromamba update ants -p "$(eval "echo ${INSTALL_ROOT_PREFIX}/ants/env")" -c conda-forge
+        pixi global update ants
+        ;;
+    "fsleyes")
+        pixi global update fsleyes
         ;;
     "dcm2niix")
-        micromamba update dcm2niix -p "$(eval "echo ${INSTALL_ROOT_PREFIX}/dcm2niix/env")" -c conda-forge
+        pixi global update dcm2niix
         ;;
     *)
         echo "Invalid installation option."
