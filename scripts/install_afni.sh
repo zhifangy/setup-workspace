@@ -104,8 +104,11 @@ export AFNI_DONT_LOGFILE=YES
 
 elif [ "$OS_TYPE" == "rhel8" ]; then
 # Install dependency package into systools environment
-deps_pkgs=("openmotif" "gsl" "netpbm" "libjpeg-turbo" "libpng" "libglu" "xorg-libxpm" "xorg-libxi" "glib2-cos7-x86_64" "mesa-libglw-devel-cos7-x86_64")
-installed_pkgs=$(micromamba list -p ${SYSTOOLS_DIR} --json | jq -r '.[].name')
+deps_pkgs=(
+    "openmotif" "gsl" "netpbm" "libjpeg-turbo" "libpng" "libglu" "xorg-libxpm" \
+    "xorg-libxi" "glib2-conda-x86_64" "mesa-libglw-devel-cos7-x86_64" "xorg-x11-server-xvfb-conda-x86_64"
+)
+installed_pkgs=$(yq ".envs.${SYSTOOLS_ENV}.dependencies | keys | .[]" ${PIXI_HOME}/manifests/pixi-global.toml)
 missing_pkgs=()
 for p in "${deps_pkgs[@]}"; do
     if ! echo "${installed_pkgs}" | grep -q "^${p}$"; then
@@ -114,12 +117,29 @@ for p in "${deps_pkgs[@]}"; do
 done
 if [ ${#missing_pkgs[@]} -ne 0 ]; then
     echo "Installing missing dependencies: ${missing_pkgs[*]} ..."
-    micromamba install -yq -p "${SYSTOOLS_DIR}" "${missing_pkgs[@]}"
-    micromamba clean -yaq
+    pixi global install -e systools "${missing_pkgs[@]}"
+    pixi clean cache -y
 fi
-# install jpeg-9e, icu58 via micromamba
-micromamba create -p ${INSTALL_PREFIX}/deps -c conda-forge -yq jpeg icu=58
-export LD_LIBRARY_PATH="${INSTALL_PREFIX}/deps/lib:${LD_LIBRARY_PATH}"
+# install openssl 1.0.2 for Xvfb
+mkdir -p ${INSTALL_PREFIX}/deps/openssl_build
+wget -O - https://github.com/openssl/openssl/releases/download/OpenSSL_1_0_2u/openssl-1.0.2u.tar.gz \
+    | tar -xz --strip-components=1 -C "${INSTALL_PREFIX}/deps/openssl_build"
+OLD_DIR=$(pwd) && cd ${INSTALL_PREFIX}/deps/openssl_build
+./config --prefix=${INSTALL_PREFIX}/deps/OpenSSL_1_0_2u \
+    --openssldir=${INSTALL_PREFIX}/deps/OpenSSL_1_0_2u shared zlib-dynamic > /dev/null
+make -s -j 4 > /dev/null && make -s install > /dev/null
+cd ${OLD_DIR}
+rm -rf ${INSTALL_PREFIX}/deps/openssl_build
+# symlink OpenSSL libraries for LD_LIBRARY_PATH
+mkdir -p ${INSTALL_PREFIX}/deps/lib
+ln -s ${INSTALL_PREFIX}/deps/lib/OpenSSL_1_0_2u/lib/libcrypto.so.1.0.0 ${INSTALL_PREFIX}/deps/lib/libcrypto.so.10
+ln -s ${INSTALL_PREFIX}/deps/lib/OpenSSL_1_0_2u/lib/libssl.so.1.0.0 ${INSTALL_PREFIX}/deps/lib/libssl.so.10
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${INSTALL_PREFIX}/deps/lib"
+# symlink Xvfb binary
+mkdir -p ${INSTALL_PREFIX}/deps/bin
+ln -s ${SYSTOOLS_DIR}/x86_64-conda-linux-gnu/sysroot/usr/bin/Xvfb ${INSTALL_PREFIX}/deps/bin/Xvfb
+ln -s ${SYSTOOLS_DIR}/x86_64-conda-linux-gnu/sysroot/usr/bin/xvfb-run ${INSTALL_PREFIX}/deps/bin/xvfb-run
+export PATH="${PATH}:${INSTALL_PREFIX}/deps/bin"
 
 # Install AFNI
 echo "Installing AFNI from offical binary package..."
@@ -140,11 +160,11 @@ Add following line to .zshrc
 
 # AFNI
 export AFNI_DIR=\"${INSTALL_ROOT_PREFIX}/afni\"
-export PATH=\"\${AFNI_DIR}:\${PATH}\"
+export PATH=\"\${AFNI_DIR}:\${PATH}:\${AFNI_DIR}/deps/bin\"
 # command completion
 if [ -f \${HOME}/.afni/help/all_progs.COMP.zsh ]; then source \${HOME}/.afni/help/all_progs.COMP.zsh; fi
 # add deps directory in LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=\"\${LD_LIBRARY_PATH}:${INSTALL_ROOT_PREFIX}/afni/deps/lib\"
+export LD_LIBRARY_PATH=\"\${LD_LIBRARY_PATH}:\${AFNI_DIR}/deps/lib\"
 # do not log commands
 export AFNI_DONT_LOGFILE=YES
 "
