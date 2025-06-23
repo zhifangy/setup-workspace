@@ -20,9 +20,6 @@ fi
 mkdir -p ${PY_LIBS} && cp ${SCRIPT_ROOT_PREFIX}/misc/pyproject.toml ${PY_LIBS}/.
 (cd ${PY_LIBS} && pixi install)
 
-# Cleanup
-pixi clean cache -y
-
 # Add following lines into .zshrc
 echo "
 Add following lines to .zshrc:

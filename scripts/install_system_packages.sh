@@ -150,9 +150,6 @@ pixi global install -e systools ${pkgs[@]} ${channels[@]}
 cp ${SCRIPT_ROOT_PREFIX}/scripts/activate_systools.sh ${SYSTOOLS_DIR}/.
 cp ${SCRIPT_ROOT_PREFIX}/scripts/deactivate_systools.sh ${SYSTOOLS_DIR}/.
 
-# Cleanup
-pixi clean cache -y
-
 # Add following lines into .zshrc
 echo "
 Add following line to .zshrc
