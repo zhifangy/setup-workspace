@@ -66,6 +66,13 @@ Add following line to .zshrc
 eval \"\$(/opt/homebrew/bin/brew shellenv)\"
 FPATH=\"\$(brew --prefix)/share/zsh/site-functions:\${FPATH}\"
 
+# UV
+export UV_ROOT_DIR=\"${INSTALL_ROOT_PREFIX}/uv\"
+export \\
+    UV_PYTHON_INSTALL_DIR=\"\${UV_ROOT_DIR}/python\" \\
+    UV_TOOL_DIR=\"\${UV_ROOT_DIR}/tool\" \\
+    UV_CACHE_DIR=\"\${UV_ROOT_DIR}/cache\"
+
 # Starship
 eval \"\$(starship init zsh)\"
 
