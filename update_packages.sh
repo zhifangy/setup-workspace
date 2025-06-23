@@ -61,6 +61,9 @@ case "$1" in
     "dcm2niix")
         pixi global update dcm2niix
         ;;
+    "tedana")
+        pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/tedana/pixi.toml")
+        ;;
     *)
         echo "Invalid installation option."
         exit 1

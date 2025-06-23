@@ -57,6 +57,9 @@ case "$1" in
     "dcm2niix")
         pixi global install dcm2niix
         ;;
+    "tedana")
+        bash ${SCRIPT_ROOT_PREFIX}/scripts/install_tedana.sh
+        ;;
     "mricrogl")
         bash ${SCRIPT_ROOT_PREFIX}/scripts/install_mricrogl.sh
         ;;
