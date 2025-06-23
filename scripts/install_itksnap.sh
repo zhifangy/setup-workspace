@@ -5,8 +5,8 @@ set -e
 source "$(cd "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/utils.sh" && init_setup
 # Set environment variables
 INSTALL_PREFIX="$(eval "echo ${INSTALL_ROOT_PREFIX}/itksnap")"
-ITKSNAP_VERSION=${ITKSNAP_VERSION:-4.2.0}
-ITKSNAP_DATE=${ITKSNAP_DATE:-20240422}
+ITKSNAP_VERSION=${ITKSNAP_VERSION:-4.2.2}
+ITKSNAP_DATE=${ITKSNAP_DATE:-20241202}
 
 # Cleanup old installation
 if [ -d ${INSTALL_PREFIX} ]; then rm -rf ${INSTALL_PREFIX}; fi
@@ -40,17 +40,17 @@ rm -r ${INSTALL_PREFIX}/itksnap-${ITKSNAP_VERSION}-${ITKSNAP_DATE}-Darwin-arm64
 
 
 elif [ "$OS_TYPE" == "rhel8" ]; then
-wget -q https://downloads.sourceforge.net/project/itk-snap/itk-snap/${ITKSNAP_VERSION}/itksnap-${ITKSNAP_VERSION}-${ITKSNAP_DATE}-Linux-gcc64.tar.gz \
+wget -q https://downloads.sourceforge.net/project/itk-snap/itk-snap/${ITKSNAP_VERSION}/itksnap-${ITKSNAP_VERSION}-${ITKSNAP_DATE}-Linux-x86_64.tar.gz \
     -P ${INSTALL_PREFIX}
-tar -xzf ${INSTALL_PREFIX}/itksnap-${ITKSNAP_VERSION}-${ITKSNAP_DATE}-Linux-gcc64.tar.gz -C ${INSTALL_PREFIX} --no-same-owner --no-same-permissions
-mv ${INSTALL_PREFIX}/itksnap-${ITKSNAP_VERSION}-${ITKSNAP_DATE}-Linux-gcc64/* ${INSTALL_PREFIX}
+tar -xzf ${INSTALL_PREFIX}/itksnap-${ITKSNAP_VERSION}-${ITKSNAP_DATE}-Linux-x86_64.tar.gz -C ${INSTALL_PREFIX} --no-same-owner --no-same-permissions
+mv ${INSTALL_PREFIX}/itksnap-${ITKSNAP_VERSION}-${ITKSNAP_DATE}-Linux-x86_64/* ${INSTALL_PREFIX}
 # fix libQt*.so files
 # see https://github.com/microsoft/WSL/issues/3023#issuecomment-372933586
 find ${INSTALL_PREFIX} -name 'libQt*.so*' | xargs strip --remove-section=.note.ABI-tag
 
 # Cleanup
-rm ${INSTALL_PREFIX}/itksnap-4.2.0-20240422-Linux-gcc64.tar.gz
-rm -r ${INSTALL_PREFIX}/itksnap-4.2.0-20240422-Linux-gcc64
+rm ${INSTALL_PREFIX}/itksnap-${ITKSNAP_VERSION}-${ITKSNAP_DATE}-Linux-x86_64.tar.gz
+rm -r ${INSTALL_PREFIX}/itksnap-${ITKSNAP_VERSION}-${ITKSNAP_DATE}-Linux-x86_64
 fi
 
 # Add following lines into .zshrc
