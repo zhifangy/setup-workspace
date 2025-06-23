@@ -5,7 +5,7 @@ set -e
 source "$(cd "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/utils.sh" && init_setup
 # Set environment variables
 INSTALL_PREFIX="$(eval "echo ${INSTALL_ROOT_PREFIX}/fsl")"
-FSL_VERSION=${FSL_VERSION:-6.0.7.15}
+FSL_VERSION=${FSL_VERSION:-6.0.7.18}
 
 # Cleanup old installation
 if [ -d ${INSTALL_PREFIX} ]; then echo "Cleanup old FSL installation..." && rm -rf ${INSTALL_PREFIX}; fi
