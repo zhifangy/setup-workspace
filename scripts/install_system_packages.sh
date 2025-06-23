@@ -62,9 +62,22 @@ brew cleanup
 echo "
 Add following line to .zshrc
 
+# Load the Zsh completion system
+autoload -Uz compinit
+compinit
+# Load Zsh's Bash compatibility layer (for bash-style scripts)
+autoload -Uz bashcompinit
+bashcompinit
+
 # Homebrew
 eval \"\$(/opt/homebrew/bin/brew shellenv)\"
 FPATH=\"\$(brew --prefix)/share/zsh/site-functions:\${FPATH}\"
+
+# Pixi
+export PIXI_HOME=\"${INSTALL_ROOT_PREFIX}/pixi\"
+export PIXI_CACHE_DIR=\"\${PIXI_HOME}/cache\"
+export PATH=\"\${PIXI_HOME}/bin:\${PATH}\"
+eval \"\$(pixi completion --shell zsh)\"
 
 # UV
 export UV_ROOT_DIR=\"${INSTALL_ROOT_PREFIX}/uv\"
@@ -72,6 +85,24 @@ export \\
     UV_PYTHON_INSTALL_DIR=\"\${UV_ROOT_DIR}/python\" \\
     UV_TOOL_DIR=\"\${UV_ROOT_DIR}/tool\" \\
     UV_CACHE_DIR=\"\${UV_ROOT_DIR}/cache\"
+
+# Micromamba
+# >>> mamba initialize >>>
+# !! Contents within this block are managed by 'mamba init' !!
+export MAMBA_EXE=\"\$(brew --prefix micromamba)/bin/micromamba\";
+export MAMBA_ROOT_PREFIX=\"${INSTALL_ROOT_PREFIX}/micromamba\";
+__mamba_setup=\"\$(\"\$MAMBA_EXE\" shell hook --shell zsh --root-prefix \"\$MAMBA_ROOT_PREFIX\" 2> /dev/null)\"
+if [ \$? -eq 0 ]; then
+    eval \"\$__mamba_setup\"
+else
+    alias micromamba=\"\$MAMBA_EXE\"  # Fallback on help from mamba activate
+fi
+unset __mamba_setup
+# <<< mamba initialize <<<
+# configuration
+export \\
+    CONDA_ENVS_DIRS=\"\${MAMBA_ROOT_PREFIX}/envs\" \\
+    CONDA_PKGS_DIRS=\"\${MAMBA_ROOT_PREFIX}/pkgs\"
 
 # Starship
 eval \"\$(starship init zsh)\"
@@ -154,6 +185,13 @@ cp ${SCRIPT_ROOT_PREFIX}/scripts/deactivate_systools.sh ${SYSTOOLS_DIR}/.
 echo "
 Add following line to .zshrc
 
+# Load the Zsh completion system
+autoload -Uz compinit
+compinit
+# Load Zsh's Bash compatibility layer (for bash-style scripts)
+autoload -Uz bashcompinit
+bashcompinit
+
 # Pixi
 export PIXI_HOME=\"${INSTALL_ROOT_PREFIX}/pixi\"
 export PIXI_CACHE_DIR=\"\${PIXI_HOME}/cache\"
@@ -168,6 +206,32 @@ export SYSTOOLS_DIR=\"${INSTALL_ROOT_PREFIX}/pixi/envs/\${SYSTOOLS_ENV}\"
 source \${SYSTOOLS_DIR}/activate_systools.sh
 export LD_LIBRARY_PATH=\"\${SYSTOOLS_DIR}/lib:\${SYSTOOLS_DIR}/x86_64-conda-linux-gnu/sysroot/usr/lib64:\${LD_LIBRARY_PATH}\"
 export PKG_CONFIG_PATH=\"\${SYSTOOLS_DIR}/lib/pkgconfig:\${PKG_CONFIG_PATH}\"
+
+# UV
+export UV_ROOT_DIR=\"${INSTALL_ROOT_PREFIX}/uv\"
+export \\
+    UV_PYTHON_INSTALL_DIR=\"\${UV_ROOT_DIR}/python\" \\
+    UV_TOOL_DIR=\"\${UV_ROOT_DIR}/tool\" \\
+    UV_CACHE_DIR=\"\${UV_ROOT_DIR}/cache\"
+
+# Micromamba
+# >>> mamba initialize >>>
+# !! Contents within this block are managed by 'mamba init' !!
+export MAMBA_EXE=\"${INSTALL_ROOT_PREFIX}/micromamba/bin/micromamba\";
+export MAMBA_ROOT_PREFIX=\"${INSTALL_ROOT_PREFIX}/micromamba\";
+__mamba_setup=\"\$(\"\$MAMBA_EXE\" shell hook --shell zsh --root-prefix \"\$MAMBA_ROOT_PREFIX\" 2> /dev/null)\"
+if [ \$? -eq 0 ]; then
+    eval \"\$__mamba_setup\"
+else
+    alias micromamba=\"\$MAMBA_EXE\"  # Fallback on help from mamba activate
+fi
+unset __mamba_setup
+# <<< mamba initialize <<<
+export PATH=\"${INSTALL_ROOT_PREFIX}/micromamba/bin:\${PATH}\"
+# configuration
+export \\
+    CONDA_ENVS_DIRS=\"\${MAMBA_ROOT_PREFIX}/envs\" \\
+    CONDA_PKGS_DIRS=\"\${MAMBA_ROOT_PREFIX}/pkgs\"
 
 # bat
 export BAT_THEME=\"Dracula\"
