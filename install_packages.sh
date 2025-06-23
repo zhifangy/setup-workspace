@@ -39,9 +39,10 @@ case "$1" in
         bash ${SCRIPT_ROOT_PREFIX}/scripts/install_fsl.sh
         ;;
     "other")
-        pixi global install ants
-        pixi global install fsleyes
-        pixi global install dcm2niix
+        bash ${SCRIPT_ROOT_PREFIX}/scripts/install_dcm2niix.sh
+        bash ${SCRIPT_ROOT_PREFIX}/scripts/install_ants.sh
+        bash ${SCRIPT_ROOT_PREFIX}/scripts/install_fsleyes.sh
+        bash ${SCRIPT_ROOT_PREFIX}/scripts/install_tedana.sh
         bash ${SCRIPT_ROOT_PREFIX}/scripts/install_mricrogl.sh
         bash ${SCRIPT_ROOT_PREFIX}/scripts/install_surfice.sh
         bash ${SCRIPT_ROOT_PREFIX}/scripts/install_itksnap.sh
