@@ -12,24 +12,27 @@ dependencies:
     - wget
     - curl
     - rclone
+    - vim
+    - git
     - htop
     - btop
     - tree
-    - vim
-    - bat
-    - git
-    - sevenzip
     - pandoc
     - rundel/quarto-cli/quarto
-    - lsd
-    - yq
     - fzf
+    - bat
+    - yq
+    - lsd
+    - direnv
+    - pixi
+    - ruff
+    - uv
+    - awscli
+    - sevenzip
     - starship
     - thefuck
-    - rclone
     - autossh
     - gromgit/fuse/sshfs-mac
-    - awscli
     # Libraries and tools
     - glib
     - python
