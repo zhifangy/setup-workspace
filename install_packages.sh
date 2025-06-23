@@ -48,17 +48,17 @@ case "$1" in
         bash ${SCRIPT_ROOT_PREFIX}/scripts/install_workbench.sh
         bash ${SCRIPT_ROOT_PREFIX}/scripts/install_convert3d.sh
         ;;
-    "ants")
-        pixi global install ants
-        ;;
-    "fsleyes")
-        pixi global install fsleyes
-        ;;
     "dcm2niix")
-        pixi global install dcm2niix
+        bash ${SCRIPT_ROOT_PREFIX}/scripts/install_dcm2niix.sh
+        ;;
+    "ants")
+        bash ${SCRIPT_ROOT_PREFIX}/scripts/install_ants.sh
         ;;
     "tedana")
         bash ${SCRIPT_ROOT_PREFIX}/scripts/install_tedana.sh
+        ;;
+    "fsleyes")
+        bash ${SCRIPT_ROOT_PREFIX}/scripts/install_fsleyes.sh
         ;;
     "mricrogl")
         bash ${SCRIPT_ROOT_PREFIX}/scripts/install_mricrogl.sh

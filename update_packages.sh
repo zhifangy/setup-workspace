@@ -52,17 +52,17 @@ case "$1" in
     "fsl")
         ${FSLDIR}/bin/update_fsl_release
         ;;
-    "ants")
-        pixi global update ants
-        ;;
-    "fsleyes")
-        pixi global update fsleyes
-        ;;
     "dcm2niix")
-        pixi global update dcm2niix
+        pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/dcm2niix/pixi.toml")
+        ;;
+    "ants")
+        pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/ants/pixi.toml")
         ;;
     "tedana")
         pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/tedana/pixi.toml")
+        ;;
+    "fsleyes")
+        pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/fsleyes/pixi.toml")
         ;;
     *)
         echo "Invalid installation option."
