@@ -8,7 +8,7 @@ INSTALL_PREFIX="$(eval "echo ${INSTALL_ROOT_PREFIX}/ants")"
 
 
 # Cleanup old installation
-if [ -d ${INSTALL_PREFIX} ]; then rm -rf ${INSTALL_PREFIX}; fi
+if [ -d ${INSTALL_PREFIX} ]; then echo "Cleanup old ANTs installation..." && rm -rf ${INSTALL_PREFIX}; fi
 
 # Install
 echo "Installing ants ..."

@@ -8,7 +8,7 @@ INSTALL_PREFIX="$(eval "echo ${INSTALL_ROOT_PREFIX}/dcm2niix")"
 
 
 # Cleanup old installation
-if [ -d ${INSTALL_PREFIX} ]; then rm -rf ${INSTALL_PREFIX}; fi
+if [ -d ${INSTALL_PREFIX} ]; then echo "Cleanup old Dcm2niix installation..." && rm -rf ${INSTALL_PREFIX}; fi
 
 # Install
 echo "Installing dcm2niix ..."

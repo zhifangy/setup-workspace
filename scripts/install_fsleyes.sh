@@ -8,7 +8,7 @@ INSTALL_PREFIX="$(eval "echo ${INSTALL_ROOT_PREFIX}/fsleyes")"
 
 
 # Cleanup old installation
-if [ -d ${INSTALL_PREFIX} ]; then rm -rf ${INSTALL_PREFIX}; fi
+if [ -d ${INSTALL_PREFIX} ]; then echo "Cleanup old FSLeyes installation..." && rm -rf ${INSTALL_PREFIX}; fi
 
 # Install
 echo "Installing fsleyes ..."
@@ -25,6 +25,7 @@ done < <(printf '%s\n' "$FILE_LIST")
 
 if [ "$OS_TYPE" == "macos" ]; then
     # Put app to /Applications folder
+    echo "Creating symlink for FSLeyes.app in /Applications ..."
     if [[ -d /Applications/FSLeyes.app || -L /Applications/FSLeyes.app ]]; then rm /Applications/FSLeyes.app; fi
     ln -s ${INSTALL_PREFIX}/.pixi/envs/default/share/fsleyes/FSLeyes.app /Applications/FSLeyes.app
 fi
