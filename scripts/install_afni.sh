@@ -75,7 +75,8 @@ fi
 echo "Installing AFNI from source code (building for apple aarch64)..."
 curl -s https://afni.nimh.nih.gov/pub/dist/bin/misc/@update.afni.binaries | \
     tcsh -s - -no_recur -package anyos_text_atlas -bindir ${INSTALL_PREFIX}
-build_afni.py -abin ${INSTALL_PREFIX} -build_root ${BUILD_DIR} -package ${PKG_VERSION} -do_backup no
+# specify -cc_path until current homebrew gcc-15 is working
+build_afni.py -abin ${INSTALL_PREFIX} -build_root ${BUILD_DIR} -package ${PKG_VERSION} -do_backup no -cc_path /usr/bin/gcc
 # post installation setup
 cp ${INSTALL_PREFIX}/AFNI.afnirc ${HOME}/.afnirc
 suma -update_env
