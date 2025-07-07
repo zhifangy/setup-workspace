@@ -104,9 +104,10 @@ nipype = ">=1.10"
 heudiconv = ">=1.3"
 dcm2bids = ">=3.2"
 pybids = ">=0.19.0"
-# antspyx =">=0.5.5" # wait for new release
+antspyx = ">=0.6"
 templateflow = ">=24.2"
 nitransforms = ">=24.1"
+niworkflows = ">=1.13"
 mne = { version = ">=1.8.0", extras = ["full"] }
 rsatoolbox = ">=0.2"
 glmsingle = { git = "https://github.com/cvnlab/GLMsingle.git" }
