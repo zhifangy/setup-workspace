@@ -5,7 +5,7 @@ set -e
 source "$(cd "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/utils.sh" && init_setup
 # Set environment variables
 INSTALL_PREFIX="$(eval "echo ${INSTALL_ROOT_PREFIX}/freesurfer")"
-FREESURFER_VERSION=${FREESURFER_VERSION:-8.0.0}
+FREESURFER_VERSION=${FREESURFER_VERSION:-8.1.0}
 
 # Cleanup old installation
 if [ -d ${INSTALL_PREFIX} ]; then
@@ -24,7 +24,7 @@ mkdir -p ${INSTALL_PREFIX}
 
 
 if [ "$OS_TYPE" == "macos" ]; then
-wget -qO- https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${FREESURFER_VERSION}/tar/freesurfer-macOS-darwin_arm64-${FREESURFER_VERSION}.tar.gz | \
+wget -O- https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${FREESURFER_VERSION}/freesurfer-macOS-darwin_arm64-${FREESURFER_VERSION}.tar.gz | \
     tar -xz -C ${INSTALL_PREFIX} --strip-components 1
 
 # Put app to /Applications folder
@@ -33,7 +33,7 @@ ln -s ${INSTALL_PREFIX}/Freeview.app /Applications/Freeview.app
 
 
 elif [ "$OS_TYPE" == "rhel8" ]; then
-wget -qO- https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${FREESURFER_VERSION}/tar/freesurfer-linux-centos8_x86_64-${FREESURFER_VERSION}.tar.gz | \
+wget -qO- https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${FREESURFER_VERSION}/freesurfer-linux-rocky8_x86_64-${FREESURFER_VERSION}.tar.gz | \
     tar -xz -C ${INSTALL_PREFIX} --strip-components 1
 fi
 
