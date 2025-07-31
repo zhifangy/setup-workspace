@@ -9,7 +9,7 @@ R_LIBS="${R_LIBS:-$(eval "echo ${INSTALL_ROOT_PREFIX}/renv")}"
 N_CPUS=${N_CPUS:-8}
 if [ "$OS_TYPE" == "macos" ]; then
     PKG_VERSION=macos_13_ARM
-    BUILD_DIR="$(eval "echo ${INSTALL_ROOT_PREFIX}/afni_build")"
+    BUILD_DIR="$(eval "echo ${INSTALL_ROOT_PREFIX}/build_afni")"
 elif [ "$OS_TYPE" == "rhel8" ]; then
     PKG_VERSION=linux_rocky_8
     SYSTOOLS_DIR="$(eval "echo ${INSTALL_ROOT_PREFIX}/systools")"
