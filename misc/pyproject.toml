@@ -31,6 +31,7 @@ kaleido = ">=1.0"
 vtk = ">=9.3.1"
 mayavi = ">=4.8.3"
 PyQt5 = ">=5.15"
+numba = ">=0.61"
 # Statistics
 statsmodels = ">=0.14"
 pingouin = ">=0.5.5"
@@ -63,6 +64,7 @@ s3fs = ">=2025"
 cookiecutter = ">=2.6"
 flask = ">=3.1.0"
 flask-cors = ">=6.0.0"
+simple-slurm = ">=0.3.6"
 # jupyterlab utility
 jupytext = ">=1.17"
 jupyter_bokeh = ">=4.0"
@@ -84,14 +86,17 @@ tensorflow = ">=2.19"
 umap-learn = ">=0.5.7"
 xgboost = ">=3.0"
 yellowbrick = ">=1.5"
+einops = ">=0.8"
 
 [tool.pixi.feature.ml_model.pypi-dependencies]
 huggingface_hub = ">=0.33"
+datasets = ">=4.0"
 tensorflow_hub = ">=0.16"
 timm = ">=1.0"
 open_clip_torch = ">=2.32"
 transformers = ">=4.52"
 sentence-transformers = ">=4.1"
+usearch = ">=2.19"
 
 [tool.pixi.feature.neuroimaging_basic.pypi-dependencies]
 nibabel = { version = ">=5.3", extras = ["all"] }
