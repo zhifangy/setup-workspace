@@ -5,7 +5,7 @@ set -e
 source "$(cd "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/utils.sh" && init_setup
 # Set environment variables
 INSTALL_PREFIX="$(eval "echo ${INSTALL_ROOT_PREFIX}/mriqc")"
-MRIQC_VERSION=${MRIQC_VERSION:-24.0.2}
+MRIQC_VERSION=${MRIQC_VERSION:-25.0.0rc0}
 # apptainer
 export APPTAINER_TMPDIR="/tmp"
 export APPTAINER_CACHEDIR="$(eval "echo ${INSTALL_ROOT_PREFIX}/apptainer")"
