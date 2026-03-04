@@ -5,8 +5,8 @@ set -e
 source "$(cd "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/utils.sh" && init_setup
 # Set environment variables
 INSTALL_PREFIX="$(eval "echo ${INSTALL_ROOT_PREFIX}/itksnap")"
-ITKSNAP_VERSION=${ITKSNAP_VERSION:-4.2.2}
-ITKSNAP_DATE=${ITKSNAP_DATE:-20241202}
+ITKSNAP_VERSION=${ITKSNAP_VERSION:-4.4.0}
+ITKSNAP_DATE=${ITKSNAP_DATE:-20250909}
 
 # Cleanup old installation
 if [ -d ${INSTALL_PREFIX} ]; then rm -rf ${INSTALL_PREFIX}; fi
