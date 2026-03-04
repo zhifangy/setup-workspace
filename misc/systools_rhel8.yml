@@ -28,6 +28,7 @@ dependencies:
   - bat
   - go-yq
   - lsdeluxe
+  - difftastic
   - direnv
   - ruff
   - uv
@@ -62,6 +63,7 @@ dependencies:
   - texinfo
   - patchelf
   - valgrind
+  - glpk
   # X11, mesa
   - xorg-libx11
   - xorg-libxft
@@ -76,6 +78,7 @@ dependencies:
   - xorg-x11-server-xvfb-conda-x86_64
   - mesa-libglw-devel-cos7-x86_64
   - libglu
+  - xcb-util-cursor
   - glib2-conda-x86_64
   - openmotif
   # fonts
