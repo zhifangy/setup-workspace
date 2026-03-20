@@ -5,7 +5,7 @@ set -e
 source "$(cd "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/utils.sh" && init_setup
 # Set environment variables
 INSTALL_PREFIX="$(eval "echo ${INSTALL_ROOT_PREFIX}/fmriprep")"
-FMRIPREP_VERSION=${FMRIPREP_VERSION:-25.2.4}
+FMRIPREP_VERSION=${FMRIPREP_VERSION:-25.2.5}
 # apptainer
 export APPTAINER_TMPDIR="/tmp"
 export APPTAINER_CACHEDIR="$(eval "echo ${INSTALL_ROOT_PREFIX}/apptainer")"
