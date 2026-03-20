@@ -5,7 +5,7 @@ set -e
 source "$(cd "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/utils.sh" && init_setup
 # Set environment variables
 INSTALL_PREFIX="$(eval "echo ${INSTALL_ROOT_PREFIX}/freesurfer")"
-FREESURFER_VERSION=${FREESURFER_VERSION:-8.1.0}
+FREESURFER_VERSION=${FREESURFER_VERSION:-8.2.0}
 
 # Cleanup old installation
 if [ -d ${INSTALL_PREFIX} ]; then
@@ -24,17 +24,33 @@ mkdir -p ${INSTALL_PREFIX}
 
 
 if [ "$OS_TYPE" == "macos" ]; then
-wget -O- https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${FREESURFER_VERSION}/freesurfer-macOS-darwin_arm64-${FREESURFER_VERSION}.tar.gz | \
-    tar -xz -C ${INSTALL_PREFIX} --strip-components 1
-
-# Put app to /Applications folder
+wget -qO "${INSTALL_PREFIX}/freesurfer-macOS-darwin_arm64-${FREESURFER_VERSION}.pkg" \
+    "https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${FREESURFER_VERSION}/freesurfer-macOS-darwin_arm64-${FREESURFER_VERSION}.pkg"
+# unpack pkg to a tmp directory
+mkdir -p ${INSTALL_PREFIX}/fs_install
+7zz e ${INSTALL_PREFIX}/freesurfer-macOS-darwin_arm64-${FREESURFER_VERSION}.pkg freesurfer.pkg/Payload -so | \
+    gunzip -dc | \
+    (cd ${INSTALL_PREFIX}/fs_install && cpio -idm)
+mv ${INSTALL_PREFIX}/fs_install/freesurfer/${FREESURFER_VERSION}/* ${INSTALL_PREFIX}
+# clean up
+rm -r ${INSTALL_PREFIX}/fs_install
+rm ${INSTALL_PREFIX}/freesurfer-macOS-darwin_arm64-${FREESURFER_VERSION}.pkg
+# put app to /Applications folder
 if [[ -d /Applications/Freeview.app || -L /Applications/Freeview.app ]]; then rm /Applications/Freeview.app; fi
 ln -s ${INSTALL_PREFIX}/Freeview.app /Applications/Freeview.app
 
 
 elif [ "$OS_TYPE" == "rhel8" ]; then
-wget -qO- https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${FREESURFER_VERSION}/freesurfer-linux-rocky8_x86_64-${FREESURFER_VERSION}.tar.gz | \
-    tar -xz -C ${INSTALL_PREFIX} --strip-components 1
+wget -qO "${INSTALL_PREFIX}/freesurfer-Rocky8-${FREESURFER_VERSION}.x86_64.rpm" \
+    "https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${FREESURFER_VERSION}/freesurfer-Rocky8-${FREESURFER_VERSION}-1.x86_64.rpm"
+# unpack rpm contents to a tmp directory
+mkdir -p /tmp/fs_install
+rpm2cpio ${INSTALL_PREFIX}/freesurfer-Rocky8-${FREESURFER_VERSION}.x86_64.rpm | cpio -idm -D /tmp/fs_install
+mv /tmp/fs_install/usr/local/freesurfer/${FREESURFER_VERSION}-1/* ${INSTALL_PREFIX}
+# clean up
+rm -r /tmp/fs_install
+rm ${INSTALL_PREFIX}/freesurfer-Rocky8-${FREESURFER_VERSION}.x86_64.rpm
+
 fi
 
 # Move previous license.txt to new FreeSurfer folder
