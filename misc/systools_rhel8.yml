@@ -33,6 +33,7 @@ dependencies:
   - ruff
   - uv
   - awscli
+  - turm
   # Libraries and tools
   - readline
   - zlib
