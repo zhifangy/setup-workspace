@@ -60,6 +60,8 @@ scikit-image = ">=0.25"
 statannotations = ">=0.7"
 
 [tool.pixi.feature.utility.pypi-dependencies]
+pillow = ">=12.2"
+soundfile = ">=0.13"
 datalad = ">=1.2"
 s3fs = ">=2025"
 cookiecutter = ">=2.6"
@@ -100,6 +102,7 @@ transformers = ">=5.3"
 sentence-transformers = ">=4.1"
 usearch = ">=2.19"
 sentencepiece = ">=0.2"
+google-genai = ">=1.74"
 
 [tool.pixi.feature.neuroimaging_basic.pypi-dependencies]
 nibabel = { version = ">=5.3", extras = ["all"] }
