@@ -67,7 +67,6 @@ s3fs = ">=2025"
 cookiecutter = ">=2.6"
 flask = ">=3.1.0"
 flask-cors = ">=6.0.0"
-simple-slurm = ">=0.3.6"
 # jupyterlab utility
 jupytext = ">=1.17"
 jupyter_bokeh = ">=4.0"
@@ -139,6 +138,10 @@ flash-attn = { url = "https://github.com/zipzou/flash-attention/releases/downloa
 decord = ">=0.6"
 qwen-vl-utils = ">=0.0.14"
 bitsandbytes = ">=0.49"
+# cluster job management
+simple-slurm = ">=0.3.6"
+submitit = ">=1.5"
+exca = ">=0.5"
 
 [tool.pixi.feature.nct.dependencies]
 python = "3.12.*"
