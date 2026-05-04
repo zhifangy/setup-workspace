@@ -124,6 +124,7 @@ brainstat = ">=0.4"
 hypertools = ">=0.8"
 neuropythy = ">=0.12"
 neuromaps = { git = "https://github.com/netneurolab/neuromaps.git" }
+fsqc = ">=2.1"
 # plotting
 brainspace = ">=0.2"
 surfplot = ">=0.3.0rc0"
