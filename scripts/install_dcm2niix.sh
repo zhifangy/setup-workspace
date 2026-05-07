@@ -13,7 +13,7 @@ if [ -d ${INSTALL_PREFIX} ]; then echo "Cleanup old Dcm2niix installation..." &&
 # Install
 echo "Installing dcm2niix ..."
 pixi init ${INSTALL_PREFIX} && \
-pixi add --manifest-path ${INSTALL_PREFIX}/pixi.toml "dcm2niix>=1.0.20250506" && \
+pixi add --manifest-path ${INSTALL_PREFIX}/pixi.toml "dcm2niix>=1.0.20260416" && \
 pixi install --manifest-path ${INSTALL_PREFIX}/pixi.toml
 
 # Symlink binary files
