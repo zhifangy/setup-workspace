@@ -10,8 +10,8 @@ pip = ">=25.0"
 setuptools = ">=80.0"
 wheel = ">=0.45"
 numpy = ">=2.1"
-pandas = ">=2.3.0"
-polars = { version = ">=1.38", extras = [
+pandas = ">=3.0.0"
+polars = { version = ">=1.42", extras = [
     "database",
     "excel",
     "fsspec",
@@ -20,13 +20,13 @@ polars = { version = ">=1.38", extras = [
     "style",
     "timezone",
 ] }
-ipython = ">=9.3"
-matplotlib = ">=3.10"
+ipython = ">=9.15"
+matplotlib = ">=3.11"
 seaborn = ">=0.13.2"
-jupyterlab = ">=4.4"
+jupyterlab = ">=4.6"
 scipy = ">=1.14"
-scikit-learn = ">=1.7.0"
-plotly = ">=6.6"
+scikit-learn = ">=1.8.0"
+plotly = ">=6.8"
 kaleido = ">=1.0"
 vtk = ">=9.3.1"
 mayavi = ">=4.8.3"
@@ -52,7 +52,7 @@ ipywidgets = ">=8.1.7"
 
 [tool.pixi.feature.graphic.pypi-dependencies]
 bokeh = ">=3.7"
-lets-plot = ">=4.6"
+lets-plot = ">=4.11"
 panel = ">=1.7"
 holoviews = ">=1.20"
 pyvista = ">=0.45"
@@ -106,7 +106,7 @@ google-genai = ">=1.74"
 [tool.pixi.feature.neuroimaging_basic.pypi-dependencies]
 nibabel = { version = ">=5.3", extras = ["all"] }
 indexed_gzip = ">=1.9"
-nilearn = ">=0.13"
+nilearn = ">=0.14"
 pydra = ">=1.0a1"
 nipype = ">=1.11"
 
@@ -122,7 +122,7 @@ niworkflows = ">=1.14"
 mne = { version = ">=1.12", extras = ["full"] }
 rsatoolbox = ">=0.3"
 glmsingle = { git = "https://github.com/cvnlab/GLMsingle.git" }
-brainstat = ">=0.4"
+# brainstat = ">=0.4"
 hypertools = ">=0.8"
 neuropythy = ">=0.12"
 neuromaps = { git = "https://github.com/netneurolab/neuromaps.git" }
