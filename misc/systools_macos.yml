@@ -23,6 +23,7 @@ dependencies:
     - bat
     - yq
     - lsd
+    - difftastic
     - direnv
     - pixi
     - ruff
