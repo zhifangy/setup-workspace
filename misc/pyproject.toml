@@ -78,7 +78,7 @@ rpy2 = ">=3.6"
 radian = ">=0.6"
 
 [tool.pixi.feature.ml.pypi-dependencies]
-torch = ">=2.12"
+torch = ">=2.13"
 torchvision = ">=0.27"
 torchaudio = ">=2.11"
 torchtext = ">=0.18"
@@ -134,7 +134,7 @@ pycortex = { version = ">=1.3", extras= ["headless"] }
 pysurfer = ">=0.11"
 
 [tool.pixi.target.linux.pypi-dependencies]
-flash-attn = { url = "https://github.com/mjun0812/flash-attention-prebuild-wheels/releases/download/v0.9.17/flash_attn-2.8.3+cu126torch2.12-cp312-cp312-linux_x86_64.whl" }
+flash-attn = { url = "https://github.com/mjun0812/flash-attention-prebuild-wheels/releases/download/v0.9.47/flash_attn-2.8.3+cu126torch2.13-cp312-cp312-linux_x86_64.whl" }
 decord = ">=0.6"
 qwen-vl-utils = ">=0.0.14"
 bitsandbytes = ">=0.49"
