@@ -111,6 +111,7 @@ pydra = ">=1.0a1"
 nipype = ">=1.11"
 
 [tool.pixi.feature.neuroimaging_utils.pypi-dependencies]
+dcm2niix = ">=1.0.20260724"
 heudiconv = ">=1.4"
 dcm2bids = ">=3.2"
 bidscoin = ">=4.6"
