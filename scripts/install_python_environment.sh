@@ -17,7 +17,7 @@ if [ -d ${PY_LIBS} ]; then
 fi
 
 # Create python environment
-mkdir -p ${PY_LIBS} && cp ${SCRIPT_ROOT_PREFIX}/misc/pyproject.toml ${PY_LIBS}/.
+mkdir -p "${PY_LIBS}" && ln -s "${SCRIPT_ROOT_PREFIX}/misc/pyproject.toml" "${PY_LIBS}/pyproject.toml"
 (cd ${PY_LIBS} && pixi install)
 
 # Add following lines into .zshrc
