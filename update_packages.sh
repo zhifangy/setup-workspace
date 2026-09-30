@@ -18,7 +18,8 @@ case "$1" in
         zsh -ic "upgrade_oh_my_zsh_all"
         ;;
     "pyenv")
-        pixi update --manifest-path ${PY_LIBS}/pyproject.toml --environment default
+        pixi update --manifest-path ${PY_LIBS}/pyproject.toml --environment default && \
+        pixi install --manifest-path ${PY_LIBS}/pyproject.toml --environment default
         ;;
     "pyenv-dryrun")
         pixi update --manifest-path ${PY_LIBS}/pyproject.toml --environment default --dry-run
@@ -53,16 +54,20 @@ case "$1" in
         ${FSLDIR}/bin/update_fsl_release
         ;;
     "dcm2niix")
-        pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/dcm2niix/pixi.toml")
+        pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/dcm2niix/pixi.toml") && \
+        pixi install --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/dcm2niix/pixi.toml")
         ;;
     "ants")
-        pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/ants/pixi.toml")
+        pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/ants/pixi.toml") && \
+        pixi install --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/ants/pixi.toml")
         ;;
     "tedana")
-        pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/tedana/pixi.toml")
+        pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/tedana/pixi.toml") && \
+        pixi install --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/tedana/pixi.toml")
         ;;
     "fsleyes")
-        pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/fsleyes/pixi.toml")
+        pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/fsleyes/pixi.toml") && \
+        pixi install --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/fsleyes/pixi.toml")
         ;;
     *)
         echo "Invalid installation option."
