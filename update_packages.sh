@@ -18,11 +18,11 @@ case "$1" in
         zsh -ic "upgrade_oh_my_zsh_all"
         ;;
     "pyenv")
-        pixi update --manifest-path ${PY_LIBS}/pyproject.toml --environment default && \
-        pixi install --manifest-path ${PY_LIBS}/pyproject.toml --environment default
+        pixi update --manifest-path ${PY_LIBS} --environment default && \
+        pixi install --manifest-path ${PY_LIBS} --environment default
         ;;
     "pyenv-dryrun")
-        pixi update --manifest-path ${PY_LIBS}/pyproject.toml --environment default --dry-run
+        pixi update --manifest-path ${PY_LIBS} --environment default --dry-run
         ;;
     "renv")
         Rscript -e "
