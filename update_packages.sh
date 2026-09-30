@@ -9,7 +9,7 @@ N_CPUS=${N_CPUS:-8}
 case "$1" in
     "systools")
         if [ "$OS_TYPE" == "macos" ]; then
-            brew upgrade && brew cleanup
+            brew upgrade --greedy && brew cleanup
         elif [ "$OS_TYPE" == "rhel8" ]; then
             pixi global update systools
         fi
