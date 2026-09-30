@@ -53,10 +53,6 @@ case "$1" in
     "fsl")
         ${FSLDIR}/bin/update_fsl_release
         ;;
-    "dcm2niix")
-        pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/dcm2niix/pixi.toml") && \
-        pixi install --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/dcm2niix/pixi.toml")
-        ;;
     "ants")
         pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/ants/pixi.toml") && \
         pixi install --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/ants/pixi.toml")
