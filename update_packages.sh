@@ -54,15 +54,15 @@ case "$1" in
         ${FSLDIR}/bin/update_fsl_release
         ;;
     "ants")
-        pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/ants/pixi.toml") && \
+        pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/ants/pixi.toml") ants && \
         pixi install --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/ants/pixi.toml")
         ;;
     "tedana")
-        pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/tedana/pixi.toml") && \
+        pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/tedana/pixi.toml") tedana && \
         pixi install --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/tedana/pixi.toml")
         ;;
     "fsleyes")
-        pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/fsleyes/pixi.toml") && \
+        pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/fsleyes/pixi.toml") fsleyes && \
         pixi install --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/fsleyes/pixi.toml")
         ;;
     *)
