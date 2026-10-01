@@ -5,7 +5,7 @@ set -e
 source "$(cd "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/utils.sh" && init_setup
 # Set environment variables
 INSTALL_PREFIX="$(eval "echo ${INSTALL_ROOT_PREFIX}/hippunfold")"
-HIPPUNFOLD_VERSION=${HIPPUNFOLD_VERSION:-v1.5.2}
+HIPPUNFOLD_VERSION=${HIPPUNFOLD_VERSION:-v2.2.0}
 # apptainer
 export APPTAINER_TMPDIR="/tmp"
 export APPTAINER_CACHEDIR="$(eval "echo ${INSTALL_ROOT_PREFIX}/apptainer")"
