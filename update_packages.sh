@@ -61,6 +61,10 @@ case "$1" in
         pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/tedana/pixi.toml") tedana && \
         pixi install --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/tedana/pixi.toml")
         ;;
+    "cubids")
+        pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/cubids/pixi.toml") cubids deno && \
+        pixi install --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/cubids/pixi.toml")
+        ;;
     "fsleyes")
         pixi update --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/fsleyes/pixi.toml") fsleyes && \
         pixi install --manifest-path $(eval "echo ${INSTALL_ROOT_PREFIX}/fsleyes/pixi.toml")

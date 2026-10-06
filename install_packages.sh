@@ -43,6 +43,7 @@ case "$1" in
         bash ${SCRIPT_ROOT_PREFIX}/scripts/install_ants.sh
         bash ${SCRIPT_ROOT_PREFIX}/scripts/install_fsleyes.sh
         bash ${SCRIPT_ROOT_PREFIX}/scripts/install_tedana.sh
+        bash ${SCRIPT_ROOT_PREFIX}/scripts/install_cubids.sh
         bash ${SCRIPT_ROOT_PREFIX}/scripts/install_mricrogl.sh
         bash ${SCRIPT_ROOT_PREFIX}/scripts/install_surfice.sh
         bash ${SCRIPT_ROOT_PREFIX}/scripts/install_itksnap.sh
@@ -57,6 +58,9 @@ case "$1" in
         ;;
     "tedana")
         bash ${SCRIPT_ROOT_PREFIX}/scripts/install_tedana.sh
+        ;;
+    "cubids")
+        bash ${SCRIPT_ROOT_PREFIX}/scripts/install_cubids.sh
         ;;
     "fsleyes")
         bash ${SCRIPT_ROOT_PREFIX}/scripts/install_fsleyes.sh
