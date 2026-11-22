@@ -12,7 +12,7 @@ if [ "$OS_TYPE" == "macos" ]; then
     BUILD_DIR="$(eval "echo ${INSTALL_ROOT_PREFIX}/build_afni")"
 elif [ "$OS_TYPE" == "rhel8" ]; then
     PKG_VERSION=linux_rocky_8
-    SYSTOOLS_DIR="$(eval "echo ${INSTALL_ROOT_PREFIX}/systools")"
+    SYSTOOLS_DIR=${SYSTOOLS_DIR:-$(eval "echo ${INSTALL_ROOT_PREFIX}/pixi/envs/systools")}
 fi
 export PATH="${INSTALL_PREFIX}:${PATH}"
 
@@ -107,7 +107,7 @@ elif [ "$OS_TYPE" == "rhel8" ]; then
 # Install dependency package into systools environment
 deps_pkgs=(
     "openmotif" "gsl" "netpbm" "libjpeg-turbo" "libpng" "libglu" "xorg-libxpm" \
-    "xorg-libxi" "glib2-conda-x86_64" "mesa-libglw-devel-cos7-x86_64" "xorg-x11-server-xvfb-conda-x86_64"
+    "xorg-libxi" "glib2-conda-x86_64" "mesa-libglw-devel-cos7-x86_64" "xorg-x11-server-xvfb-conda-x86_64" "libxfont2"
 )
 installed_pkgs=$(yq ".envs.${SYSTOOLS_ENV}.dependencies | keys | .[]" ${PIXI_HOME}/manifests/pixi-global.toml)
 missing_pkgs=()
@@ -118,7 +118,7 @@ for p in "${deps_pkgs[@]}"; do
 done
 if [ ${#missing_pkgs[@]} -ne 0 ]; then
     echo "Installing missing dependencies: ${missing_pkgs[*]} ..."
-    pixi global install -e systools "${missing_pkgs[@]}"
+    pixi global add --environment ${SYSTOOLS_ENV} "${missing_pkgs[@]}"
     pixi clean cache -y
 fi
 # install openssl 1.0.2 for Xvfb
@@ -133,8 +133,8 @@ cd ${OLD_DIR}
 rm -rf ${INSTALL_PREFIX}/deps/openssl_build
 # symlink OpenSSL libraries for LD_LIBRARY_PATH
 mkdir -p ${INSTALL_PREFIX}/deps/lib
-ln -s ${INSTALL_PREFIX}/deps/lib/OpenSSL_1_0_2u/lib/libcrypto.so.1.0.0 ${INSTALL_PREFIX}/deps/lib/libcrypto.so.10
-ln -s ${INSTALL_PREFIX}/deps/lib/OpenSSL_1_0_2u/lib/libssl.so.1.0.0 ${INSTALL_PREFIX}/deps/lib/libssl.so.10
+ln -s ${INSTALL_PREFIX}/deps/OpenSSL_1_0_2u/lib/libcrypto.so.1.0.0 ${INSTALL_PREFIX}/deps/lib/libcrypto.so.10
+ln -s ${INSTALL_PREFIX}/deps/OpenSSL_1_0_2u/lib/libssl.so.1.0.0 ${INSTALL_PREFIX}/deps/lib/libssl.so.10
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${INSTALL_PREFIX}/deps/lib"
 # symlink Xvfb binary
 mkdir -p ${INSTALL_PREFIX}/deps/bin

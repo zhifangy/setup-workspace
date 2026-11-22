@@ -81,6 +81,7 @@ dependencies:
   - xorg-libice
   - xorg-libsm
   - xorg-x11-server-xvfb-conda-x86_64
+  - libxfont2
   - mesa-libglw-devel-cos7-x86_64
   - libglu
   - xcb-util-cursor
