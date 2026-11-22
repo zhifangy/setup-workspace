@@ -6,7 +6,7 @@ source "$(cd "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/utils.sh" && init_setup
 # Set environment variables
 R_ROOT_PREFIX=${R_ROOT_PREFIX:-$(eval "echo ${INSTALL_ROOT_PREFIX}/r")}
 R_BUILD_DIR=${R_BUILD_DIR:-$(eval "echo ${INSTALL_ROOT_PREFIX}/r_build")}
-R_VERSION=${R_VERSION:-4.5.1}
+R_VERSION=${R_VERSION:-4.6.2}
 N_CPUS=${N_CPUS:-8}
 if [ "$OS_TYPE" == "rhel8" ]; then OS_IDENTIFIER=${OS_IDENTIFIER:-"rhel-8.8"}; fi
 
@@ -84,6 +84,12 @@ export \
 
 
 elif [ "$OS_TYPE" == "rhel8" ]; then
+# Use compilers and libraries from the pixi systools environment
+SYSTOOLS_DIR=${SYSTOOLS_DIR:-$(eval "echo ${INSTALL_ROOT_PREFIX}/pixi/envs/systools")}
+if [ ! -x "${SYSTOOLS_DIR}/bin/clang" ]; then
+    echo "ERROR: systools environment not found at ${SYSTOOLS_DIR}."
+    exit 1
+fi
 # R compilation configuration
 CONFIGURE_OPTIONS="\
     --build=x86_64-redhat-linux-gnu \
@@ -104,10 +110,10 @@ export \
     OBJC="${SYSTOOLS_DIR}/bin/clang" \
     CXX="${SYSTOOLS_DIR}/bin/clang++" \
     FC="${SYSTOOLS_DIR}/bin/gfortran" \
-    CPPFLAGS="-I${SYSTOOLS_DIR}/include -I/usr/include ${CPPFLAGS}" \
-    LDFLAGS="-L${SYSTOOLS_DIR}/lib ${LDFLAGS}" \
+    CPPFLAGS="-I${SYSTOOLS_DIR}/include ${CPPFLAGS}" \
+    LDFLAGS="-L${SYSTOOLS_DIR}/lib -Wl,-rpath,${SYSTOOLS_DIR}/lib -Wl,-rpath-link,${SYSTOOLS_DIR}/lib ${LDFLAGS}" \
     PKG_CONFIG_PATH="${SYSTOOLS_DIR}/lib/pkgconfig" \
-    LD_LIBRARY_PATH="${R_ROOT_PREFIX}/lib64/R/lib:/lib64"
+    LD_LIBRARY_PATH="${R_ROOT_PREFIX}/lib64/R/lib"
 fi
 
 # Download R source code
