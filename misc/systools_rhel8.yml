@@ -39,6 +39,9 @@ dependencies:
   - readline
   - zlib
   - bzip2
+  - lz4-c
+  - zstd
+  - brotli
   - openjdk
   - libssh2
   - libgit2
@@ -86,3 +89,7 @@ dependencies:
   # fonts
   - open-fonts
   - mscorefonts
+  # Apache Arrow (R arrow source build)
+  - aws-sdk-cpp
+  - libthrift
+  - libutf8proc
