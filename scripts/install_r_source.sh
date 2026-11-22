@@ -171,6 +171,17 @@ local({
   ))
 })
 EOF
+# Build the arrow package from source against the systools environment.
+# set this in the site Renviron so it applies to every package installation
+SYSTOOLS_DIR_RENVIRON="${INSTALL_ROOT_PREFIX}/pixi/envs/systools"
+if [ "$(eval "echo ${SYSTOOLS_DIR_RENVIRON}")" != "${SYSTOOLS_DIR}" ]; then SYSTOOLS_DIR_RENVIRON="${SYSTOOLS_DIR}"; fi
+cat <<EOF > ${R_ROOT_PREFIX}/lib64/R/etc/Renviron.site
+## Apache Arrow: build libarrow from source with all optional features
+## (EXTRA_CMAKE_FLAGS can be overridden in ~/.Renviron)
+LIBARROW_BINARY=\${LIBARROW_BINARY:-false}
+LIBARROW_MINIMAL=\${LIBARROW_MINIMAL:-false}
+EXTRA_CMAKE_FLAGS="-DPKG_CONFIG_EXECUTABLE=${SYSTOOLS_DIR_RENVIRON}/bin/pkg-config.bin -DCMAKE_PREFIX_PATH=${SYSTOOLS_DIR_RENVIRON} -DCMAKE_IGNORE_PREFIX_PATH=/usr;/usr/local"
+EOF
 fi
 
 # Cleanup
