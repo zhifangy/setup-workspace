@@ -27,10 +27,15 @@ case "$1" in
     "renv")
         Rscript -e "
         options(Ncpus=${N_CPUS})
+        options(repos=c(CRAN=Sys.getenv('CRAN'), CRAN_SOURCE=Sys.getenv('CRAN_SOURCE')))
         old_pkgs <- old.packages(lib.loc=Sys.getenv('R_LIBS'), repos=Sys.getenv('CRAN'))
         if (!is.null(old_pkgs)) {
+            pkgs <- rownames(old_pkgs)
+            # rebuild packages that pak installed from source (e.g., 'pkg?source') from source again
+            plat <- installed.packages(lib.loc=Sys.getenv('R_LIBS'), fields='RemotePkgPlatform')[pkgs, 'RemotePkgPlatform']
+            pkgs[plat %in% 'source'] <- paste0(pkgs[plat %in% 'source'], '?source')
             pak::meta_update();
-            pak::pkg_install(rownames(old_pkgs), lib=\"${R_LIBS}\", upgrade=TRUE);
+            pak::pkg_install(pkgs, lib=\"${R_LIBS}\", upgrade=TRUE);
             pak::cache_clean()
         } else {
             cat('No package needs to be updated.\n');
